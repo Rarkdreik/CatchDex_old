@@ -1,0 +1,7 @@
+{
+  "name": "DexCatch",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

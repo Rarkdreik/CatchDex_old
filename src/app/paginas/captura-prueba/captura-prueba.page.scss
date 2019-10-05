@@ -1,0 +1,701 @@
+// #################################################
+// ######## ESTILOS GENERALES ######################
+// #################################################
+
+* {
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.contenedor {
+  height: 100%;
+}
+
+.color1 {
+    background-color: rgba(18, 18, 50, 0.6);
+}
+
+.color2 {
+  background-color: rgb(19, 39, 82);
+}
+
+.row {
+  margin-right: unset !important;
+  margin-left: unset !important;
+}
+
+.nopadin {
+  padding: unset;
+}
+
+.espacio {
+  white-space: pre;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.width90 {
+    width: 90%;
+}
+
+.borde10 {
+  border-radius: 10px;
+}
+
+.padin10 {
+  padding: 10px;
+}
+
+.margenfondo10 {
+  margin-bottom: 10px;
+}
+
+.margenfondo_10 {
+  margin-bottom: -10px;
+}
+
+.prueba {
+    background-image: url(../../../assets/images/test.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.imgSobreImg {
+    left: 0px;
+    position: absolute;
+    top: 4%;
+}
+
+.textoImgCentrado {
+  position: relative;
+  top: -52%;
+  left: 50%;
+  margin-left: -20px;
+  color: black
+}
+
+.barraVida {
+    height: 17px;
+    display: flex;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.cardPokemon {
+  width: 30%;
+  height: 150px;
+}
+
+// .scene {
+//   width: 130px;
+//   height: 130px;
+//   font-size: 10px;
+// }
+
+.tarjeta3 {
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  // margin: 0px 15px 0px 0px !important;
+}
+
+.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.tarjeta3__face {
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.tarjeta3__face--back {
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+.equipopoke {
+  border-radius: 15px;
+  margin: 10px 0px 0px 0px !important;
+  justify-content: center;
+  align-content: center;
+  padding: 11px;
+  line-height: 1.8;
+}
+
+.equipopoke * {
+  font-size: 8px;
+  padding: unset;
+  margin: unset;
+}
+
+.pokemon2 {
+  height: 90px !important;
+}
+
+.pokemonbatalla {
+  transform: rotateY(180deg);
+  height: 140px;
+  // position: relative;
+  // display: inline-flex;
+  // bottom: -25px;
+}
+
+.pokesalvaje {
+  height: 140px;
+  float: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // #################################################
+// // ######### HIDDEN STYLES #########################
+// // #################################################
+
+.hide {
+  visibility: hidden;
+}
+
+.show {
+  visibility: show;
+}
+
+.block {
+  display: block;
+}
+
+.none {
+  display: none;
+}
+
+// #################################################
+// ######## POKEBALL ANIMATION #####################
+// #################################################
+
+
+a {
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 60px;
+  margin: 4px;
+}
+
+.catch {
+  background: #ff041d00;
+  border-radius: 50%;
+  position: absolute;
+  height: 25px !important;
+  width: 26px !important;
+  margin: 91px 0px 0px 63px !important;
+  z-index: 3;
+}
+
+.star {
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+}
+
+.star1 {
+  opacity: 0;
+  left: 0;
+}
+
+.star2 {
+  opacity: 0;
+  left: 33%;
+}
+
+.star3 {
+  opacity: 0;
+  left: 70%;
+}
+
+.pokeball {
+  position: absolute;
+  width: 150px;
+  border-radius: 50%;
+  transition: all 0.25s ease-in-out;
+  transform-origin: 50% 50%;
+}
+
+.pokeball:target {
+  animation: throw-ball 2s 1, wiggle 1.3s 3 3s;
+  animation-fill-mode: forwards;
+}
+
+.pokeball:target .catch {
+  animation: catch 0.2s 1 steps(1, start);
+  animation-delay: 7.2s;
+}
+
+.pokeball:target .star1 {
+  animation: star1 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.pokeball:target .star2 {
+  animation: star2 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.pokeball:target .star3 {
+  animation: star3 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.superball {
+  position: absolute;
+  width: 150px;
+  
+  border-radius: 50%;
+  transition: all 0.25s ease-in-out;
+  transform-origin: 50% 100%;
+}
+
+.superball:target {
+  animation: throw-ball 2s 1, wiggle 1.3s 3 3s;
+  animation-fill-mode: forwards;
+}
+
+.superball:target .catch {
+  animation: catch 0.2s 1 steps(1, start);
+  animation-delay: 7.2s;
+}
+
+.superball:target .star1 {
+  animation: star1 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.superball:target .star2 {
+  animation: star2 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.superball:target .star3 {
+  animation: star3 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.ultraball {
+  position: absolute;
+  width: 150px;
+  
+  border-radius: 50%;
+  transition: all 0.25s ease-in-out;
+  transform-origin: 50% 100%;
+}
+
+.ultraball:target {
+  animation: throw-ball 2s 1, wiggle 1.3s 3 3s;
+  animation-fill-mode: forwards;
+}
+
+.ultraball:target .catch {
+  animation: catch 0.2s 1 steps(1, start);
+  animation-delay: 7.2s;
+}
+
+.ultraball:target .star1 {
+  animation: star1 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.ultraball:target .star2 {
+  animation: star2 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.ultraball:target .star3 {
+  animation: star3 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.masterball {
+  position: absolute;
+  width: 150px;
+  
+  border-radius: 50%;
+  transition: all 0.25s ease-in-out;
+  transform-origin: 50% 100%;
+}
+
+.masterball:target {
+  animation: throw-ball 2s 1, wiggle 1.3s 3 3s;
+  animation-fill-mode: forwards;
+}
+
+.masterball:target .catch {
+  animation: catch 0.2s 1 steps(1, start);
+  animation-delay: 7.2s;
+}
+
+.masterball:target .star1 {
+  animation: star1 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.masterball:target .star2 {
+  animation: star2 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+.masterball:target .star3 {
+  animation: star3 0.45s linear 1;
+  animation-delay: 7.2s;
+}
+
+@keyframes throw-ball {
+  0% {
+      top: 40%;
+      left: 0%;
+      transform: scale(0.3);
+  }
+
+  // 25% {
+  //     top: 35%;
+  //     left: 10%;
+  //     transform: scale(0.4);
+  // }
+
+  // 45% {
+  //     top: 25%;
+  //     left: 20%;
+  //     transform: scale(0.5);
+  // }
+
+  // 65% {
+  //     top: 20%;
+  //     left: 30%;
+  //     transform: scale(0.6);
+  // }
+
+  // 85% {
+  //     top: 15%;
+  //     left: 40%;
+  //     transform: scale(0.7);
+  // }
+
+  100% {
+      top: 10%;
+      left: 50%;
+      transform: scale(0.8);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+      transform: scale(0.8) rotateZ(0deg);
+  }
+
+  20% {
+      transform: scale(0.8) rotateZ(30deg);
+  }
+
+  40% {
+      transform: scale(0.8) rotateZ(0deg);
+  }
+
+  60% {
+      transform: scale(0.8) rotateZ(-30deg);
+  }
+
+  80% {
+      transform: scale(0.8) rotateZ(30deg);
+  }
+
+  100% {
+      transform: scale(0.8) rotateZ(0deg);
+  }
+}
+
+@keyframes catch {
+  0% {
+      background: rgba(255, 0, 0, 0.2);
+  }
+
+  100% {
+      background: rgba(255, 0, 0, 0.7);
+  }
+}
+
+@keyframes star1 {
+  0% {
+      top: 0;
+      left: 0;
+      opacity: 1;
+      transform: rotate(0);
+  }
+
+  40% {
+      top: -70px;
+      left: -30px;
+      opacity: 1;
+      transform: scale(1);
+  }
+
+  80% {
+      top: -50px;
+      left: -50px;
+      opacity: 1;
+      transform: rotate(-45deg)scale(1.2);
+  }
+
+  100% {
+      top: -50px;
+      left: -50px;
+      opacity: 0;
+      transform: rotate(-60deg) scale(1);
+  }
+}
+
+@keyframes star2 {
+  0% {
+      top: 0;
+      opacity: 1;
+  }
+
+  40% {
+      top: -90px;
+      opacity: 1;
+      transform: scale(1);
+  }
+
+  80% {
+      top: -70px;
+      opacity: 1;
+      transform: scale(1.2);
+  }
+
+  100% {
+      top: -70px;
+      opacity: 0;
+      transform: scale(1);
+  }
+}
+
+@keyframes star3 {
+  0% {
+      top: 0;
+      opacity: 1;
+      transform: rotate(0);
+  }
+
+  40% {
+      top: -70px;
+      left: calc(70% + 30px);
+      opacity: 1;
+      transform: scale(1);
+  }
+
+  80% {
+      top: -50px;
+      left: calc(70% + 50px);
+      opacity: 1;
+      transform: rotate(45deg) scale(1.2);
+  }
+
+  100% {
+      top: -50px;
+      left: calc(70% + 50px);
+      opacity: 0;
+      transform: rotate(60deg) scale(1);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* {
+  color: white;
+}
+
+// .contenedor {
+//     height: 100%;
+// }
+
+.textoenlinea {
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.paddingright10 {
+  padding: 0px 10px 0px 0px;
+}
+
+// .reajusteMarginLetras {
+//     margin: 10px 0px 10px 0px !important;
+//     width: 100%;
+// }
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.tarjeta {
+  margin: 2%;
+  padding: 5%;
+}
+
+.tipoVACIO {
+  display: none;
+}
+
+* {
+  color: white;
+}
+
+.contenedor {
+  height: 100%;
+  justify-content: center;
+  display: flex;
+}
+
+.marginauto {
+  margin: auto;
+}
+
+.wrapper {
+  background-color: #1b1f22;
+}
+
+.icon {
+  width: 50px;
+  position: relative;
+  bottom: 2px;
+}
+
+.enlinea {
+  display: inline-block;
+}
+
+.bloque {
+  background-color: transparent;
+  border-radius: 4px;
+  border: solid 1px #ffffff;
+}
+
+.bordeabajo {
+  border-bottom: solid 1px #ffffff; 
+}
+
+.bordearriba {
+  border-top: solid 1px #ffffff; 
+}
+
+.bordederecha {
+  border-right: solid 1px #ffffff;
+}
+
+.borde {
+  border: solid 1px #ffffff;
+}
+
+.letraregion {
+  text-transform: uppercase;
+}
+
+.backbuton {
+  justify-content: left;
+  display: grid;
+  box-shadow: none;
+}

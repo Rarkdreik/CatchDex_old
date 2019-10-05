@@ -1,0 +1,36 @@
+.contenedor {
+    height: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+ion-select {
+    height: 41px;
+}
+
+.marginauto {
+    margin: auto;
+}
+
+.wrapper {
+    background-color: #1b1f22;
+}
+
+.icon {
+    width: 50px;
+    position: relative;
+    bottom: 2px;
+}
+
+.borde {
+    border: 1px solid white !important;
+    border-radius: 5px;
+}
+
+input {
+    text-align: center;
+}
+
+.select-text {
+    text-transform: capitalize;
+}

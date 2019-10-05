@@ -1,0 +1,122 @@
+<ion-content>
+  <div id='wrapper' class='wrapper'>
+    <ion-back-button defaultHref='main/home' text='' color='dark' class='btn backbutton fixed-top noborder'></ion-back-button>
+    <div class="row fixed-top">
+        <div *ngFor='let pokemon of pokemonsEquipo' class='cardPokemon'>
+          <div class="row">
+            <div class="col-12">
+              <div class="row" (click)='irDescripcion(pokemon.numero_nacional)'>
+                <div class="col-12">
+                  <img alt='{{pokemon.numero_nacional}}' src='../../assets/images/pokemons/{{pokemon.numero_nacional}}.png' class='ball {{pokemon.ball}}'>
+                </div>
+              </div>
+              <div class="row margen5">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-10">
+                      <div class="row">
+                        <div class="col-4" (click)='capturar(pokemon.numero_nacional, pokemon.numeroEvolucion)'>
+                          <img alt='ball' src='../../assets/images/iconos/iconBallBlanco.png'>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                        <div class="col-4" (click)='setFavorito(pokemon)'>
+                          <img alt='fav' src='../../assets/images/iconos/iconStarAzul.png' *ngIf='pokemon.favorito'>
+                          <img alt='fav' src='../../assets/images/iconos/iconStarBlanco.png' *ngIf='!pokemon.favorito'>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="row margen5">
+                    <div class="col-3">
+                      {{pokemon.numero_regional}}
+                    </div>
+                    <div class="col-9 text-right">
+                      {{pokemon.nombre | uppercase}}
+                    </div>
+                  </div>
+                  <div class="row margen5">
+                    <div class="col-12">
+                      <p class='tipo tipo{{pokemon.tipoUno | uppercase}}'>{{pokemon.tipoUno | uppercase}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <p class='tipo tipo{{pokemon.tipoDos | uppercase}}'>{{pokemon.tipoDos | uppercase}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+          <div *ngFor='let pokemon of pokemonsAtrapado' class='cardPokemon'>
+            <div class="row">
+              <div class="col-12">
+                <div class="row" (click)='irDescripcion(pokemon.numero_nacional)'>
+                  <div class="col-12">
+                    <img alt='{{pokemon.numero_nacional}}' src='../../assets/images/pokemons/{{pokemon.numero_nacional}}.png' class='ball {{pokemon.ball}}'>
+                  </div>
+                </div>
+                <div class="row margen5">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-1">
+                      </div>
+                      <div class="col-10">
+                        <div class="row">
+                          <div class="col-4" (click)='capturar(pokemon.numero_nacional, pokemon.numeroEvolucion)'>
+                            <img alt='ball' src='../../assets/images/iconos/iconBallBlanco.png'>
+                          </div>
+                          <div class="col-4">
+                          </div>
+                          <div class="col-4" (click)='setFavorito(pokemon)'>
+                            <img alt='fav' src='../../assets/images/iconos/iconStarAzul.png' *ngIf='pokemon.favorito'>
+                            <img alt='fav' src='../../assets/images/iconos/iconStarBlanco.png' *ngIf='!pokemon.favorito'>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row margen5">
+                      <div class="col-3">
+                        {{pokemon.numero_regional}}
+                      </div>
+                      <div class="col-9 text-right">
+                        {{pokemon.nombre | uppercase}}
+                      </div>
+                    </div>
+                    <div class="row margen5">
+                      <div class="col-12">
+                        <p class='tipo tipo{{pokemon.tipoUno | uppercase}}'>{{pokemon.tipoUno | uppercase}}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <p class='tipo tipo{{pokemon.tipoDos | uppercase}}'>{{pokemon.tipoDos | uppercase}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</ion-content>
