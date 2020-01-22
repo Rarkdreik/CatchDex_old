@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Entrenador } from '../modelo/entrenador';
+import { Entrenador } from '../../modelo/entrenador';
 import { Router } from '@angular/router';
-import { FirebaseService } from '../servicios/firebase.service';
-import { PokemonInterface } from '../modelo/Pokemons';
-import { AuthService } from '../servicios/auth.service';
-import { PokemonService } from '../servicios/pokemon.service';
+import { FirebaseService } from '../../servicios/firebase.service';
+import { PokemonInterface } from '../../modelo/Pokemons';
+import { AuthService } from '../../servicios/auth.service';
+import { PokemonService } from '../../servicios/pokemon.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 // import { DatabaseService } from '../servicios/database.service';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: 'avatar.page.html',
+  styleUrls: ['avatar.page.scss'],
 })
 
-export class HomePage implements OnInit {
+export class AvatarPage implements OnInit {
   private datos: string[] = [];
   nombre: string = '';
   private correo: string = '';
@@ -23,8 +23,7 @@ export class HomePage implements OnInit {
   pokeini: string = '';
   pokemon: PokemonInterface;
   pokemons: PokemonInterface[] = [];
-  entrenador: Entrenador = { Nick: 'RarkdreikHome', Nombre: 'Rik', Genero: 'hombre', Exp: 0, Nivel: 1, ContenedorExp: 50, 
-    MultiplicadorExp: 2, ATK: 10, Capturados: 0, Fav: 0, PokeBalls: 20, SuperBalls: 10, UltraBalls: 5, MasterBalls: 1};
+  entrenador: Entrenador = { Nick: 'RarkdreikHome', Nombre: 'Rik', Exp: 0, Nivel: 1, ContenedorExp: 50, PokeBalls: 20, SuperBalls: 10, UltraBalls: 5, MasterBalls: 1};
   equipoPokemon: PokemonInterface[] = [];
 
   constructor(

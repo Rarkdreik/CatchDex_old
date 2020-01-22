@@ -4,7 +4,7 @@ import { PrincipalPage } from './principal.page';
 
 const routes: Routes = [
   { path: 'main', component: PrincipalPage, children: [
-  { path: 'home', children: [{path: '', loadChildren: () => import('../../home/home.module').then(m => m.HomePageModule)}]},
+  { path: 'avatar', children: [{path: '', loadChildren: () => import('../avatar/avatar.module').then(m => m.AvatarPageModule)}]},
   { path: 'centropokemon', children: [{path: '', loadChildren: () => import('../centropokemon/centropokemon.module').then(m => m.CentropokemonPageModule) }]},
   { path: 'equipo', children: [{path: '', loadChildren: () => import('../equipo/equipo.module').then(m => m.EquipoPageModule) }]},
   { path: '', redirectTo: '', pathMatch: 'full' }]},

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { DatabaseService } from './servicios/database.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 
 export class AppComponent {  
-  rootPage: any = null;
+  // rootPage: any = null;
   // public appPages = [
   //   { title: 'KANTO', url: '/tabs/tab1' },
   //   { title: 'JOHTO', url: '/home' },
@@ -22,7 +23,7 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
+    private statusBar: StatusBar
   ) {
     this.initializeApp();
   }

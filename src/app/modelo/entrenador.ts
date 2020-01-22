@@ -3,16 +3,14 @@ import { PokemonInterface } from './Pokemons';
 export interface Entrenador {
     Nick: string;
     Nombre: string;
-    Genero: string;
-
+    // Genero: string;
     Exp: number;
     Nivel: number;
     ContenedorExp: number;
-    MultiplicadorExp: number;
 
-    ATK: number;
-    Capturados: number;
-    Fav: number;
+    // ATK: number;
+    // Capturados: number;
+    // Fav: number;
 
     PokeBalls: number;
     SuperBalls: number;

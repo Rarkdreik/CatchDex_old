@@ -1,4 +1,12 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { ToastService } from './servicios/toast.service';
+import { PosibilidadCapturaService } from './servicios/posibilidad-captura.service';
+import { PokemonService } from './servicios/pokemon.service';
+import { LoadingService } from './servicios/loading.service';
+import { FirebaseService } from './servicios/firebase.service';
+import { AuthGuard } from './servicios/auth.guard';
+import { AudioService } from './servicios/audio.service';
+import { AlertsService } from './servicios/alerts.service';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -40,17 +48,24 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   providers: [
-    StatusBar,
+    GooglePlus,
+    NativeAudio,
+    NativeStorage,
     SplashScreen,
+    StatusBar,
+    SQLite, SQLitePorter,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} },
-    SQLite,
-    SQLitePorter,
-    DatabaseService,
-    NativeAudio,
     AuthService,
-    GooglePlus,
-    NativeStorage
+    AlertsService,
+    AudioService,
+    AuthGuard,
+    DatabaseService,
+    FirebaseService,
+    LoadingService,
+    PokemonService,
+    PosibilidadCapturaService,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })

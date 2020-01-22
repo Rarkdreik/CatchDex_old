@@ -1,5 +1,13 @@
+
 * {
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 8px;
     color: white;
+}
+
+.cardPokemon {
+    padding: 5px;
 }
 
 .contenedor {
@@ -46,4 +54,24 @@
 
 .letraregion {
     text-transform: uppercase;
+}
+
+.cardPokemon {
+    width: 33%;
+}
+
+.noborder {
+    border: none;
+    box-shadow: none;
+}
+
+.backbutton {
+    display: grid;
+    justify-content: left;
+}
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+.col-7, .col-8, .col-9, .col-11, .col-12 {
+    padding: unset;
+    margin: unset;
 }

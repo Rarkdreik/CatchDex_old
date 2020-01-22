@@ -35,6 +35,13 @@ export class SesionPage implements OnInit {
      )  {  }
 
   ngOnInit(){
+    // this.db.getDatabaseState().subscribe(rdy => {
+    //   if (rdy) {
+    //     this.db.getEntrenador().subscribe(pokemons => {
+    //       this.pokemons = pokemons;
+    //     })
+    //   }
+    // });
     this.loginForm = this.formBuilder.group({
       usuario: new FormControl('', Validators.compose([
         Validators.minLength(4),
@@ -68,9 +75,6 @@ export class SesionPage implements OnInit {
           picture: user.imageUrl
         })
         .then(() => {
-          // console.log(this.loginForm.get('usuario').value);
-          // console.log(this.loginForm.get('region').value);
-          // console.log(this.loginForm.get('pokeini').value);
           this.nativeStorage.setItem('datos', {
             usuario: this.loginForm.get('usuario').value,
             email: user.email,
@@ -81,6 +85,7 @@ export class SesionPage implements OnInit {
               if (rdy) {
                 let pokemon: PokemonInterface;
                 pokemon = this.poke.getStatsPokemon(this.loginForm.get('pokeini').value);
+                console.log('pantanlla sesion un problema amigos');
                 this.db.addPokemonEquipo(pokemon);
                 this.db.addPokemonAtrapado(pokemon);
               }

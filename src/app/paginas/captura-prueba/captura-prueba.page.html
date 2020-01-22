@@ -1,17 +1,18 @@
 <div class="contenedor">
 <div id="wrapper" class="wrapper">
-<ion-back-button defaultHref='main/home' text='' color='dark' class='btn backbutton fixed-top noborder'></ion-back-button>
+<ion-back-button defaultHref='main/home' text='' color='dark' class='btn backbuton fixed-top noborder'></ion-back-button>
+<div>
 <ion-row class="row prueba">
   <ion-row class="row">
     <ion-col class="col-6">
-        <ion-row class="row color1 borde10 padin10 margenfondo10">
+        <ion-row class="row borde10 padin10 color1 margenfondo10">
             <div class="width100 flex espacio">{{pokeSalvaje.nombre}} 
                 <div class="text-left" *ngIf="pokeSalvaje.genero === 'hembra'"><ion-icon name="female" style="font-size: 15px; color: hotpink"></ion-icon> </div>
                 <div class="text-left" *ngIf="pokeSalvaje.genero === 'macho'"><ion-icon name="male" style="font-size: 15px; color: dodgerblue"></ion-icon> </div>
                 <div class="text-right width100">Nv. {{ pokeSalvaje.nivel }}</div>
               </div>
           <ion-row class="row margenfondo_10">
-              <div class="barraVida"><img src="../../../assets/images/item_pokemon/barra_hp.png" alt="hp"  [ngStyle]="barraHP"></div>
+              <div class="color1 barraVida"><img src="../../../assets/images/item_pokemon/barra_hp.png" alt="hp"  [ngStyle]="barraHP"></div>
               <div class="textoImgCentrado">{{pokeSalvaje.hp}} / {{pokeSalvaje.hp_max}}</div>
           </ion-row>
         </ion-row>
@@ -123,31 +124,31 @@
   <ion-row class="row">
     <ion-col class="col-6"><img src="../../../assets/images/pokemons/{{pokemonBatalla.numero_nacional}}.png" class="pokemonbatalla"></ion-col>
     <ion-col class="col-6">
-        <ion-row class="row color1 borde10 padin10 margenfondo10">
+        <ion-row class="row borde10 padin10 color1 margenfondo10">
             <div class="width100 flex espacio">{{pokemonBatalla.nombre}} 
                 <div class="text-left" *ngIf="pokemonBatalla.genero === 'hembra'"><ion-icon name="female" style="font-size: 15px; color: hotpink"></ion-icon> </div>
                 <div class="text-left" *ngIf="pokemonBatalla.genero === 'macho'"><ion-icon name="male" style="font-size: 15px; color: dodgerblue"></ion-icon> </div>
                 <div class="text-right width100">Nv. {{ pokemonBatalla.nivel }}</div>
               </div>
           <ion-row class="row margenfondo_10">
-              <div class="barraVida"><img src="../../../assets/images/item_pokemon/barra_hp.png" alt="hp" [ngStyle]="barraHP2"></div>
+              <div class="color1 barraVida"><img src="../../../assets/images/item_pokemon/barra_hp.png" alt="hp" [ngStyle]="barraHP2"></div>
               <div class="textoImgCentrado">{{pokemonBatalla.hp}} / {{pokemonBatalla.hp_max}}</div>
           </ion-row>
           <ion-row class="row">
-              <div class="barraVida"><img src="../../../assets/images/item_pokemon/barra_exp.png" alt="hp" [ngStyle]="barraExp"></div>
+              <div class="color1 barraVida"><img src="../../../assets/images/item_pokemon/barra_exp.png" alt="hp" [ngStyle]="barraExp"></div>
           </ion-row>
         </ion-row>
         
         <ion-row class="row">
-            <ion-row class="row inline-flex margintop10">
+            <ion-row class="row margintop10" style="display: inline-flex;">
                 <ion-col class="center nopadin" (click)="atacar()">
-                    <div class="color1 center width90 borde10 padin10" ><img src="../../../assets/images/iconos/espadasFreepik.png"></div>
+                    <div class="center width90 borde10 padin10 color1 " ><img src="../../../assets/images/iconos/espadasFreepik.png"></div>
                 </ion-col>
                 <ion-col class="nopadin" (click)="mostrarPokeballs()">
-                  <div class="color1 center width90 borde10 padin10" ><img src="../../../assets/images/iconos/mochila.png"></div>
+                  <div class="center width90 borde10 padin10 color1" ><img src="../../../assets/images/iconos/mochila.png"></div>
                 </ion-col>
                 <ion-col class="nopadin" (click)="huir()">
-                  <div class="color1 center width90 borde10 padin10" ><img src="../../../assets/images/iconos/huir.png"></div>
+                  <div class="center width90 borde10 padin10 color1" ><img src="../../../assets/images/iconos/huir.png"></div>
                 </ion-col>
               </ion-row>
             </ion-row>
@@ -155,21 +156,22 @@
       </ion-col>
   </ion-row>
 </ion-row>
-<ion-row class="row width100" style="display: flex; justify-content: center;">
-      <div *ngFor='let pokemon of equipoPokemon' class='cardPokemon'>
-      <!-- <div class="scene scene--tarjeta3"> -->
-          <div class="tarjeta3" [ngClass]="flip">
-            <ion-row class="row tarjeta3__face tarjeta3__face--front  equipopoke" (click)="voltear()" (click)="cambiar_pokemon(pokemon)">
+<ion-row class="row width100" style="display: flex; justify-content: center; " [ngStyle]='ocultarEquipo'>
+      <div *ngFor='let pokemon of equipoPokemon' class='cardPokemon' (click)="voltear()">
+      <div class="scene scene--tarjeta">
+          <div class="tarjeta" [ngClass]="flip">
+            <ion-row class="row color2 tarjeta__face tarjeta__face--front  equipopoke" (click)="cambiar_pokemon(pokemon)">
                 <img alt="{{ pokemon.numero_nacional }}" src="../../assets/images/pokemons/{{ pokemon.numero_nacional }}.png" class="center pokemon2">
                 <ion-row class="row width100">
-                  <ion-col class="">Hp</ion-col>
-                  <ion-col class="col-8 text-center">{{pokemon.hp}} / {{pokemon.hp_max}}</ion-col>
-                  <ion-col class="text-right" *ngIf="pokemon.genero === 'hembra'"><ion-icon name="female" style="font-size: 15px; color: hotpink"></ion-icon></ion-col>
-                  <ion-col class="text-right" *ngIf="pokemon.genero === 'macho'"><ion-icon name="male" style="font-size: 15px; color: dodgerblue"></ion-icon></ion-col>
+                  <ion-col class="col">Hp</ion-col>
+                  <ion-col class="col-8 text-center">{{pokemon.hp}}/{{pokemon.hp_max}}</ion-col>
+                  <!-- <ion-col class="col text-right" *ngIf="pokemon.genero === 'hembra'"><ion-icon name="female" style="font-size: 10px; color: hotpink"></ion-icon></ion-col>
+                  <ion-col class="col text-right" *ngIf="pokemon.genero === 'macho'"><ion-icon name="male" style="font-size: 10px; color: dodgerblue"></ion-icon></ion-col> -->
                 </ion-row>
             </ion-row>
-            <div  class="tarjeta3__face tarjeta3__face--back  equipopoke" (click)="voltear()">
-              <!-- <ion-row class="row">ESTADÍSTICAS</ion-row> -->
+            <div class=" color2 tarjeta__face tarjeta__face--back  equipopoke">
+              <ion-row class="row" style="visibility: hidden">ESTADÍSTICAS</ion-row>
+              <!-- <ion-row class="row" style="visibility: hidden">ESTADÍSTICAS</ion-row> -->
               <ion-row class="row">
                 <ion-col class="col  text-left">Ataque:</ion-col>
                 <ion-col class="text-center">{{ pokemon.ataque }}</ion-col>
@@ -196,35 +198,53 @@
               </ion-row>
             </div>
           </div>
-        <!-- </div> -->
+        </div>
       </div>
 </ion-row>
 
-<ion-row class="row">
-  <ion-fab vertical="bottom" horizontal="end" id="fab2" class="fab-horizontal-end fab-vertical-bottom fixed-bottom ">
-    <ion-fab-button class="fab-button fabMainButton ion-color ion-color-dark ion-activatable ion-focusable" color="dark" ng-reflect-color="dark">
-      <ion-icon aria-label="arrow dropleft" name="arrow-dropleft" role="img" ng-reflect-name="arrow-dropleft">
-      </ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="start" class="fab-list-side-start fabListaBottom">
-      <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#pokeball" class="button">
-        <img alt="pokeball" src="../../../assets/images/item_pokemon/pokeball.png" class="center" (click)="capturarPokeBall()">
-        <ion-badge fixed slot="end" color="dark">{{ entrenador.PokeBalls }}</ion-badge>
-      </a>
-      <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#superball" class="button">
-        <img alt="superball" src="../../../assets/images/item_pokemon/superball.png" class="center" (click)="capturarSuperBall()">
-        <ion-badge fixed slot="end" color="dark">{{ entrenador.SuperBalls }}</ion-badge>
-      </a>
-      <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#ultraball" class="button">
-        <img alt="ultraball" src="../../../assets/images/item_pokemon/ultraball.png" class="center" (click)="capturarUltraBall()">
-        <ion-badge fixed slot="end" color="dark">{{ entrenador.UltraBalls }}</ion-badge>
-      </a>
-      <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#masterball" class="button">
-        <img alt="masterball" src="../../../assets/images/item_pokemon/masterball.png" class="center" (click)="capturarMasterBall()">
-        <ion-badge fixed slot="end" color="dark">{{ entrenador.MasterBalls }}</ion-badge>
-      </a>
-    </ion-fab-list>
-  </ion-fab>
+<ion-row class="row width100" style="display: flex; margin-top: 10px; justify-content: center;" [ngStyle]='ocultarBalls'>
+  <div class='cardBall color1'>
+    <div class="tarjeta2">
+      <ion-row class="row">
+        <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#pokeball" class="button">
+          <img alt="pokeball" src="../../../assets/images/item_pokemon/pokeball.png" class="center" (click)="capturarPokeBall()">
+          <ion-badge fixed slot="end" class="medalla">{{ entrenador.PokeBalls }}</ion-badge>
+        </a>
+      </ion-row>
+    </div>
+  </div>
+  <div class='cardBall color1'>
+    <div class="tarjeta2">
+      <ion-row class="row">
+        <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#superball" class="button">
+          <img alt="superball" src="../../../assets/images/item_pokemon/superball.png" class="center" (click)="capturarSuperBall()">
+          <ion-badge fixed slot="end" class="medalla">{{ entrenador.SuperBalls }}</ion-badge>
+        </a>
+      </ion-row>
+    </div>
+  </div>
+  <div class='cardBall color1'>
+    <div class="tarjeta2">
+      <ion-row class="row">
+        <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#ultraball" class="button">
+          <img alt="ultraball" src="../../../assets/images/item_pokemon/ultraball.png" class="center" (click)="capturarUltraBall()">
+          <ion-badge fixed slot="end" class="medalla">{{ entrenador.UltraBalls }}</ion-badge>
+        </a>
+      </ion-row>
+    </div>
+  </div>
+  <div class='cardBall color1'>
+    <div class="tarjeta2">
+      <ion-row class="row">
+        <a href="/captura-prueba/{{pokeSalvaje.numero_nacional}}#masterball" class="button">
+          <img alt="masterball" src="../../../assets/images/item_pokemon/masterball.png" class="center" (click)="capturarMasterBall()">
+          <ion-badge fixed slot="end" class="medalla">{{ entrenador.MasterBalls }}</ion-badge>
+        </a>
+      </ion-row>
+    </div>
+  </div>
 </ion-row>
+</div>
+
 </div>
 </div>

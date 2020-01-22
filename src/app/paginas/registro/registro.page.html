@@ -1,22 +1,28 @@
-<ion-content>
-  <div id="wrapper" class="wrapper">
-    <header id="header">
-      <div class="logo">
-        <img class="icon" src="../../../assets/icon/iconBall.png" alt="">
-      </div>
-      <div class="content">
-        <div class="inner">
-          <h1>DexCatch</h1>
-          <form [formGroup]="loginForm">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <span class="separacion">
+        <h3 class="upBoton" (click)="irHome()">&lt;</h3>
+        <h3 class="text-center">CatchDex</h3>
+      </span>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+
+          <form role="form">
             <div class="form-group">
-              <label for="usuario"> </label>
-              <input type="text" class="form-control" id="usuario" formControlName="usuario"
-                placeholder="Introduce un nombre" value="">
+              <label for="exampleInputEmail1">Correo</label>
+              <input type="email" class="form-control btn-outline-secondary" id="exampleInputEmail1">
             </div>
+
             <div class="form-group">
-              <ion-label></ion-label>
-              <ion-select formControlName="region" placeholder="Elige una Region Inicial" value="" okText="Okay"
-                cancelText="Dismiss" class="borde">
+              <label for="exampleInputPassword1">Contraseña</label>
+              <input type="password" class="form-control btn-outline-secondary" id="exampleInputPassword1">
+            </div>
+
+            <div class="form-group">
+              <!-- <ion-label>Region Inicial</ion-label> -->
+              <ion-select placeholder="Elige una region" value="" okText="Okay" cancelText="Dismiss" class="btn-outline-secondary">
                 <ion-select-option value="kanto">KANTO</ion-select-option>
                 <ion-select-option value="johto">JOHTO</ion-select-option>
                 <ion-select-option value="hoenn">HOENN</ion-select-option>
@@ -27,9 +33,8 @@
               </ion-select>
             </div>
             <div class="form-group">
-              <ion-label></ion-label>
-              <ion-select formControlName="pokeini" placeholder="Elige un Pokemon Inicial" value="" okText="Okay"
-                cancelText="Dismiss" class="borde">
+              <!-- <ion-label>Pókemon Inicial</ion-label> -->
+              <ion-select placeholder="Elige un pókemon" value="" okText="Okay" cancelText="Dismiss" class="btn-outline-secondary">
                 <ion-select-option value="001">BULBASAUR</ion-select-option>
                 <ion-select-option value="004">CHARMANDER</ion-select-option>
                 <ion-select-option value="007">SQUIRTLE</ion-select-option>
@@ -62,20 +67,16 @@
                 <ion-select-option value="133">EEVEE</ion-select-option>
               </ion-select>
             </div>
+
+            <button type="submit" class="btn btn-outline-secondary">Registrarme</button>
+            <div class="form-group"></div>
+            <button type="button" class="form-control btn btn-outline-secondary">¿Registrarme con google?</button>
+
           </form>
+
         </div>
       </div>
-      <div>
-        <button type="button" class="btn" id="googlelogin" (click)="doGoogleLogin()"
-          [disabled]="!loginForm.valid">Sesion Google</button>
-      </div>
-      <nav>
-        <ul style="visibility: hidden">
-          <!-- <li><a href="#"></a></li> -->
-        </ul>
-      </nav>
-    </header>
-
-    <!-- Main -->
+      <hr>
+    </div>
   </div>
-</ion-content>
+</div>

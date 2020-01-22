@@ -37,7 +37,7 @@ export class Tab3Page {
     });
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
-        this.db.getPokemonsAtrapado().subscribe(pokemons => {
+        this.db.getPokemonsAtrapados().subscribe(pokemons => {
           this.pokemonsAtrapado = pokemons;
         });
       }

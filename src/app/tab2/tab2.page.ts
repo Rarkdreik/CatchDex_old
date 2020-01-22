@@ -23,18 +23,19 @@ export class Tab2Page {
     public modalController: ModalController,
     public loadingController: LoadingController,
   ) { }
-  
+
   ngOnInit() {
     let region: string = '';
-    this.nativeStorage.getItem('datos').then(data =>{
+    this.nativeStorage.getItem('datos').then(data => {
       region = data.region;
-    });
-    this.db.getDatabaseState().subscribe(rdy => {
-      if (rdy) {
-        this.db.getPokemons(region).subscribe(pokemons => {
-          this.pokemons = pokemons;
-        })
-      }
+
+      this.db.getDatabaseState().subscribe(rdy => {
+        if (rdy) {
+          this.db.getPokemons(region).subscribe(pokemons => {
+            this.pokemons = pokemons;
+          })
+        }
+      });
     });
   }
 
@@ -45,6 +46,9 @@ export class Tab2Page {
    */
   capturar(numPoke: any, pokemox: number) {
     this.db.setnumero_nacional(numPoke);
+    console.log(`\n\n\n
+    no se que era ${pokemox}
+    \n\n\n`);
     if (pokemox === 0) {
       if (this.db.getEntrenador().Nivel >= 20) {
         this.db.setnumero_nacional(numPoke);
@@ -78,7 +82,7 @@ export class Tab2Page {
 
   irDescripcion(numero_nacional: string) {
     this.route.navigateByUrl(`modal2/${numero_nacional}`);
-   }
+  }
 
 
   // async presentModal(titulo: string) {

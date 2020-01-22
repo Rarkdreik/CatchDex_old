@@ -8,18 +8,6 @@
     font-size: 12px;
 }
 
-.contenedor {
-  height: 100%;
-}
-
-.color1 {
-    background-color: rgba(18, 18, 50, 0.6);
-}
-
-.color2 {
-  background-color: rgb(19, 39, 82);
-}
-
 .row {
   margin-right: unset !important;
   margin-left: unset !important;
@@ -31,10 +19,6 @@
 
 .espacio {
   white-space: pre;
-}
-
-.inline-flex {
-    display: inline-flex;
 }
 
 .width90 {
@@ -85,36 +69,48 @@
 }
 
 .cardPokemon {
-  width: 30%;
+  width: 100px;
+  height: 150px;
+  margin: 5px;
+}
+
+.cardBall {
+  width: 45%;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.scene {
+  width: 100px;
   height: 150px;
 }
 
-// .scene {
-//   width: 130px;
-//   height: 130px;
-//   font-size: 10px;
-// }
-
-.tarjeta3 {
+.tarjeta {
   height: 100%;
   transition: transform 1s;
   transform-style: preserve-3d;
-  backface-visibility: hidden;
-  // margin: 0px 15px 0px 0px !important;
+  // backface-visibility: hidden;
+}
+
+.tarjeta2 {
+  height: 100%;
 }
 
 .is-flipped {
   transform: rotateY(180deg);
 }
 
-.tarjeta3__face {
-  backface-visibility: hidden;
+.tarjeta__face {
   position: absolute;
   width: 100%;
   height: 100%;
+  backface-visibility: hidden;
 }
 
-.tarjeta3__face--back {
+.tarjeta__face--back {
   backface-visibility: hidden;
   transform: rotateY(180deg);
 }
@@ -129,7 +125,7 @@
 }
 
 .equipopoke * {
-  font-size: 8px;
+  font-size: 9px;
   padding: unset;
   margin: unset;
 }
@@ -140,62 +136,96 @@
 
 .pokemonbatalla {
   transform: rotateY(180deg);
-  height: 140px;
-  // position: relative;
-  // display: inline-flex;
-  // bottom: -25px;
+  height: 100px;
 }
 
 .pokesalvaje {
-  height: 140px;
+  height: 100px;
   float: right;
 }
 
 
+.textoenlinea {
+  display: inline-flex;
+  justify-content: space-between;
+}
 
+.paddingright10 {
+  padding: 0px 10px 0px 0px;
+}
 
+.show {
+  display: block;
+}
 
+.hide {
+  display: none;
+}
 
+.tipoVACIO {
+  display: none;
+}
 
+.contenedor {
+  height: 100%;
+  justify-content: center;
+  display: flex;
+}
 
+.marginauto {
+  margin: auto;
+}
 
+.wrapper {
+  background-color: #1b1f22;
+}
 
+.icon {
+  width: 50px;
+  position: relative;
+  bottom: 2px;
+}
 
+.enlinea {
+  display: inline-block;
+}
 
+.bloque {
+  background-color: transparent;
+  border-radius: 4px;
+  border: solid 1px #ffffff;
+}
 
+.bordeabajo {
+  border-bottom: solid 1px #ffffff; 
+}
 
+.bordearriba {
+  border-top: solid 1px #ffffff; 
+}
 
+.bordederecha {
+  border-right: solid 1px #ffffff;
+}
 
+.borde {
+  border: solid 1px #ffffff;
+}
 
+.letraregion {
+  text-transform: uppercase;
+}
 
+.backbuton {
+  justify-content: left;
+  display: grid;
+  box-shadow: none;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.medalla {
+  display: grid;
+  background: none;
+}
 
 
 
@@ -226,10 +256,9 @@
 
 
 a {
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  width: 60px;
   margin: 4px;
+  height: min-content;
+  box-shadow: none;
 }
 
 .catch {
@@ -406,30 +435,6 @@ a {
       transform: scale(0.3);
   }
 
-  // 25% {
-  //     top: 35%;
-  //     left: 10%;
-  //     transform: scale(0.4);
-  // }
-
-  // 45% {
-  //     top: 25%;
-  //     left: 20%;
-  //     transform: scale(0.5);
-  // }
-
-  // 65% {
-  //     top: 20%;
-  //     left: 30%;
-  //     transform: scale(0.6);
-  // }
-
-  // 85% {
-  //     top: 15%;
-  //     left: 40%;
-  //     transform: scale(0.7);
-  // }
-
   100% {
       top: 10%;
       left: 50%;
@@ -443,7 +448,7 @@ a {
   }
 
   20% {
-      transform: scale(0.8) rotateZ(30deg);
+      transform: scale(0.8) rotateZ(15deg);
   }
 
   40% {
@@ -451,11 +456,11 @@ a {
   }
 
   60% {
-      transform: scale(0.8) rotateZ(-30deg);
+      transform: scale(0.8) rotateZ(-15deg);
   }
 
   80% {
-      transform: scale(0.8) rotateZ(30deg);
+      transform: scale(0.8) rotateZ(15deg);
   }
 
   100% {
@@ -555,147 +560,4 @@ a {
       opacity: 0;
       transform: rotate(60deg) scale(1);
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* {
-  color: white;
-}
-
-// .contenedor {
-//     height: 100%;
-// }
-
-.textoenlinea {
-  display: inline-flex;
-  justify-content: space-between;
-}
-
-.paddingright10 {
-  padding: 0px 10px 0px 0px;
-}
-
-// .reajusteMarginLetras {
-//     margin: 10px 0px 10px 0px !important;
-//     width: 100%;
-// }
-
-.show {
-  display: block;
-}
-
-.hide {
-  display: none;
-}
-
-.tarjeta {
-  margin: 2%;
-  padding: 5%;
-}
-
-.tipoVACIO {
-  display: none;
-}
-
-* {
-  color: white;
-}
-
-.contenedor {
-  height: 100%;
-  justify-content: center;
-  display: flex;
-}
-
-.marginauto {
-  margin: auto;
-}
-
-.wrapper {
-  background-color: #1b1f22;
-}
-
-.icon {
-  width: 50px;
-  position: relative;
-  bottom: 2px;
-}
-
-.enlinea {
-  display: inline-block;
-}
-
-.bloque {
-  background-color: transparent;
-  border-radius: 4px;
-  border: solid 1px #ffffff;
-}
-
-.bordeabajo {
-  border-bottom: solid 1px #ffffff; 
-}
-
-.bordearriba {
-  border-top: solid 1px #ffffff; 
-}
-
-.bordederecha {
-  border-right: solid 1px #ffffff;
-}
-
-.borde {
-  border: solid 1px #ffffff;
-}
-
-.letraregion {
-  text-transform: uppercase;
-}
-
-.backbuton {
-  justify-content: left;
-  display: grid;
-  box-shadow: none;
 }
