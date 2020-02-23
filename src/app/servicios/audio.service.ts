@@ -17,11 +17,15 @@ export class AudioService {
   private audioPlayer: HTMLAudioElement = new Audio();
   private forceWebAudio: Boolean = true;
 
-  constructor(private platform: Platform, private nativeAudio: NativeAudio) {
+  constructor(private platform: Platform, private nativeAudio: NativeAudio) { }
 
-  }
-
-  preload(key: string, asset: string): void {
+  /**
+   * Carga en memoria un audio dandole un nombre que la identifica y la ruta del archivo deseado.
+   * 
+   * @param key Nombre identificador del sonido indicado en asset.
+   * @param asset Ruta del archivo de sonido/audio.
+   */
+  public preload(key: string, asset: string): void {
 
     if (this.platform.is('cordova') && !this.forceWebAudio) {
 
@@ -36,7 +40,7 @@ export class AudioService {
     } else {
 
       const audio = new Audio();
-      audio.src = asset;
+      // let src = asset;
 
       this.sounds.push({
         key: key,
@@ -48,27 +52,57 @@ export class AudioService {
 
   }
 
-  play(key: string): void {
-
+  /**
+   * Reproduce un audio indicado que previamente ha sido cargado.
+   * 
+   * @param key Nombre identificador del sonido.
+   */
+  public play(key: string): void {
     const soundToPlay = this.sounds.find((sound) => {
       return sound.key === key;
     });
-
     if (soundToPlay.isNative) {
-
       this.nativeAudio.play(soundToPlay.asset).then((res) => {
         console.log(res);
       }, (err) => {
         console.log(err);
       });
-
     } else {
-
       this.audioPlayer.src = soundToPlay.asset;
       this.audioPlayer.play();
-
     }
+  }
 
+  /**
+   * Carga en memoria todos los audios necesarios para su rapida utilización.
+   */
+  public async cargarAudios() {
+    // this.preload('audioCogerPokeball', '../../assets/audio/creciendo.mp3');
+    // this.preload('audioCrecePokeball', '../../assets/audio/creciendo.mp3');
+    this.preload('audioAtrapando', '../../assets/audio/capturando.mp3');
+    this.preload('audioSacudidaPokeball', '../../assets/audio/sacudida.mp3');
+    this.preload('audioCapturado', '../../assets/audio/capturado.mp3');
+    this.preload('audioEscapado', '../../assets/audio/escapandose.mp3');
+    // this.preload('audioEncogePokeball', '../../assets/audio/regresa.mp3');
+    this.preload('audioRegresa', '../../assets/audio/regresa.mp3');
+  }
+
+  /**
+   * Detiene el audio indicado que se está reproduciendo.
+   * 
+   * @param audio El nombre asignado a un sonido.
+   */
+  public async stopAudio(audio: string) {
+    this.nativeAudio.stop(audio);
+  }
+
+  /**
+   * Elimina o quita un audio cargado en memoria.
+   * 
+   * @param audio El nombre asignado a un sonido.
+   */
+  public async quitarAudio(audio: string) {
+    this.nativeAudio.unload(audio);
   }
 
 }

@@ -15,12 +15,12 @@ export class PrincipalPage {
   constructor(  ) { }
 
   ionTabsDidChange($event) {
-    console.log('[PrincipalPage] ionTabsDidChange, $event: ', $event);
+    // console.log('[PrincipalPage] ionTabsDidChange, $event: ', $event);
     this.swipeTabDirective.onTabInitialized($event.tab);
   }
 
   onTabChange($event) {
-    console.log('[PrincipalPage] onTabChange, $event: ', $event);
+    // console.log('[PrincipalPage] onTabChange, $event: ', $event);
     this.tabRef.select($event);
   }
 }

@@ -1,61 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Entrenador</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-<div id="wrapper" class="wrapper">
-
-    <div class="row width100">
+  <div id="wrapper" class="wrapper">
+    <header id="header">
       <div class="col-12">
-        <div class="row bordeabajo">
-          <div class="col-2">
-            <h4>{{entrenador.Nivel}}</h4>
-          </div>
-          <div class="col-8 text-center">
-            <h4>{{entrenador.Nombre}}</h4>
-          </div>
-          <div class="col-2">
+        <div class="row">
+          <div class="col-12">
+            <div class="row bordeabajo">
+              <div class="col-4">
+                <h6 class="text-center">Nivel {{repo.getMaster().nivel}}</h6>
+              </div>
+              <div class="col-8 text-center">
+                <h4>{{this.repo.getMaster().nick}}</h4>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row bordeabajo width100">
-      <div class="col-6 bordederecha">
-        <img src="../../assets/images/avatar/avatar.png" alt="">
-      </div>
-      <div class="col-6">
-          <div class="row width100">
-            <h3 class="letraregion bordeabajo text-center width100">{{region}}</h3>
-            <div class="col-12" (click)="iraregion()">
-                <img src="../../assets/images/mapas/{{region}}.jpg" alt="">
+
+
+      <div class="col-12 bordeabajo">
+
+        <div class="row">
+          <div class="col-6 bordederecha centrar">
+            <img [src]="repo.getAvatar()" alt="" class="imgAvatar">
+          </div>
+          <div class="col-6">
+            <div class="row width100">
+              <div class="col-12" (click)="iraregion()">
+                <h6 class="letraregion bordeabajo text-center width100">{{repo.getRegion()}}</h6>
+                <img src="../../assets/images/mapas/{{repo.getRegion()}}.jpg" alt="">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="qrData" qrc-class="generadoQr" qrc-errorCorrectionLevel="L">
+                </ngx-qrcode>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12"></div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
+        </div>
+      </div>
 
+
+      <div class="col-12" style="margin-top: 0rem">
+        <div class="row">
+          <div class="col-6 bordederecha">
+            <div class="row marginTopButton">
+              <div class="col-12">
+                <button type="button" (click)="galeria()" class="btn btn-outline-secondary width-padre">
+                  <ion-icon name="md-image"></ion-icon>
+                </button>
+              </div>
             </div>
           </div>
+          <div class="col-6">
+            <div class="row marginTopButton">
+              <div class="col-12">
+                <button type="button" (click)="leerQr()" class="btn btn-outline-secondary width-padre">
+                  <ion-icon name="md-qr-scanner"></ion-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row" style="margin-top: 0rem">
-      <div class="col-6 bordederecha">
-      </div>
-      <div class="col-6 " style="visibility: hidden">
-        qwer
-      </div>
-    </div>
 
-    <div class="row ">
-      <div class="col-8 ">
-      </div>
-      <div class="col-4">
-          <!-- <img src="../../assets/images/iconos/iconBallBlanco.png" alt=""> -->
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-8">
-      </div>
-      <div class="col-4">
-      </div>
-    </div>
-
-
-</div>
+    </header>
+  </div>
 </ion-content>

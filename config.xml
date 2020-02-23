@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.tenebrae.catchdex" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>DexCatch</name>
-    <description>Una pokedex interactiva.</description>
-    <author email="tormentaoscura19@gmail.com" href="http://tenebrae.es/">Equipo de desarrollo Rarkdreik</author>
+<widget id="com.rarkdreik.catchdex" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>CatchDex</name>
+    <description>Una dex para catch a todos.</description>
+    <author email="info@tenebrae.com" href="http://tenebrae.com/">Equipo Dreik</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -15,7 +15,7 @@
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
-    <preference name="FadeSplashScreenDuration" value="10000" />
+    <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
@@ -92,24 +92,23 @@
         <splash height="2208" src="resources/ios/splash/Default-736h.png" width="1242" />
         <splash height="2436" src="resources/ios/splash/Default-2436h.png" width="1125" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
-        <icon height="216" src="resources/ios/icon/icon-108@2x.png" width="216" />
-        <splash height="2688" src="resources/ios/splash/Default-2688h~iphone.png" width="1242" />
-        <splash height="1242" src="resources/ios/splash/Default-Landscape-2688h~iphone.png" width="2688" />
-        <splash height="1792" src="resources/ios/splash/Default-1792h~iphone.png" width="828" />
-        <splash height="828" src="resources/ios/splash/Default-Landscape-1792h~iphone.png" width="1792" />
     </platform>
-    <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
-    <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
-    <plugin name="cordova-plugin-device" spec="2.0.2" />
-    <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
+    <allow-navigation href="http://localhost:8100" sessionid="eb72af3d" />
+    <plugin name="cordova-plugin-device" spec="~2.0.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="cordova-plugin-googleplus" source="npm">
-        <variable name="REVERSED_CLIENT_ID" value="103360828692-ak330t9v4k2isjjpvis105q126e07q4h.apps.googleusercontent.com" />
-        <variable name="WEB_APPLICATION_CLIENT_ID" value="103360828692-989u9r4pm67vv6l9led62pk0gmef51oq.apps.googleusercontent.com" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
+    <plugin name="cordova-plugin-nativestorage" spec="^2.3.2" />
+    <plugin name="cordova-sqlite-storage" spec="^4.0.0" />
+    <plugin name="uk.co.workingedge.cordova.plugin.sqliteporter" spec="^1.1.1" />
+    <plugin name="cordova-plugin-googleplus" spec="^8.2.1">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.446704972713-0sh2uu17q24ikhrkgu2end9egsh93dq9" />
+        <variable name="WEB_APPLICATION_CLIENT_ID" value="446704972713-s73s5csaakd726t2oqnds4ot8un57gab.apps.googleusercontent.com" />
     </plugin>
-    <allow-navigation href="http://localhost:8100" sessionid="d51655ef" />
-    <allow-navigation href="http://localhost:8101" sessionid="77e1c113" />
-    <plugin name="cordova-sqlite-storage" spec="^3.3.0" />
-    <engine name="android" spec="^7.1.4" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-camera" spec="~4.1.0" />
+    <plugin name="cordova-plugin-file" spec="~6.0.2" />
+    <plugin name="cordova-plugin-ionic-webview" spec="~4.1.3" />
+    <plugin name="cordova-plugin-qrscanner" spec="^3.0.1" />
 </widget>

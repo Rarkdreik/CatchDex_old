@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './servicios/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'sesion', pathMatch: 'full' },
-  { path: 'sesion', loadChildren: './paginas/sesion/sesion.module#SesionPageModule' },
-  { path: 'inises', loadChildren: './paginas/inises/inises.module#InisesPageModule' },
-  { path: 'captura-prueba/:id', loadChildren: './paginas/captura-prueba/captura-prueba.module#CapturaPruebaPageModule' },
-  { path: 'modal2/:id', loadChildren: './paginas/DescripModal/modal.module#ModalPageModule' },
-  // { path: 'captura-prueba', loadChildren: './paginas/captura-prueba/captura-prueba.module#CapturaPruebaPageModule' },
-  // { path: 'modal', loadChildren: './paginas/modal/modal.module#ModalPageModule' },
-  // { path: 'modal2', loadChildren: './paginas/DescripModal/modal.module#ModalPageModule' },
-  { path: '', loadChildren: () => import('./paginas/principal/principal.module').then(m => m.PrincipalPageModule) },
-  { path: '', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule) },
-  { path: 'home', loadChildren: './paginas/home/home.module#HomePageModule' },
-  { path: '**', loadChildren: './paginas/sesion/sesion.module#SesionPageModule' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', loadChildren: './paginas/home/home.module#HomePageModule', canActivate: [AuthGuard] },
+  { path: 'inises', loadChildren: './paginas/inises/inises.module#InisesPageModule', canActivate: [AuthGuard] },
+  { path: 'iniregion', loadChildren: './paginas/iniregion/iniregion.module#IniregionPageModule', canActivate: [AuthGuard] },
+  { path: 'registro', loadChildren: './paginas/registro/registro.module#RegistroPageModule', canActivate: [AuthGuard] },
+  { path: 'captura/:id', loadChildren: './paginas/captura/captura.module#CapturaPageModule', canActivate: [AuthGuard] },
+  { path: 'modal2/:id', loadChildren: './paginas/DescripModal/modal.module#ModalPageModule', canActivate: [AuthGuard] },
+  { path: '', loadChildren: () => import('./paginas/principal/principal.module').then(m => m.PrincipalPageModule), canActivate: [AuthGuard] },
+  { path: '', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule), canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

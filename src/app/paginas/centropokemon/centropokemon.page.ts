@@ -9,7 +9,6 @@ export class CentropokemonPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

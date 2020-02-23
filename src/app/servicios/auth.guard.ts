@@ -1,28 +1,27 @@
-import { AlertsService } from './alerts.service';
-import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { take, map, tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private auth: AuthService, private router: Router, private alertServicio: AlertsService) { }
+  constructor(private auth: AuthService, private router: Router, private authService: AuthService) { }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.auth.user.pipe(
-      take(1),
-      map(user => !!user),
-      tap(loggedIn => {
-        if (!loggedIn) {
-          this.alertServicio.alertaSimple('Acceso Denegado', 'Debes iniciar sesión para acceder al contenido.', 'error');
-          this.router.navigateByUrl('/');
-        }
-      })
-    );
+  public async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    await this.authService.cargarSession();
+    if (this.auth.isAuthenticated()) {
+      if (state.url == '/inises' || state.url == '/registro') { this.router.navigateByUrl('/iniregion'); return false; 
+      } else { return true; }
+    } else if (!(state.url == '/home' || state.url == '/inises' || state.url == '/registro')) {
+      this.router.navigateByUrl('/home');
+      return false;
+    } else {
+      return true;
+    }
+    
   }
 
 }

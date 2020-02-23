@@ -1,19 +1,16 @@
 <ion-app>
-    <ion-menu side="start" menuId="custom" class="my-custom-menu">
-        <ion-header>
-          <ion-toolbar color="tertiary">
-            <ion-title>Custom Menu</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <ion-list>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-          </ion-list>
-        </ion-content>
-      </ion-menu>
+  <ion-menu side="start" menuId="home" class="menu-home" >
+    <ion-header>
+      <ion-toolbar color="gold">
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list >
+        <ion-item *ngIf="isAutenticated()" (click)="cerrarSesion()">Cerrar Sesión</ion-item>
+        <ion-item *ngIf="isAutenticated()" (click)="borrarCuenta()">Borrar Cuenta</ion-item>
+      </ion-list >
+    </ion-content>
+  </ion-menu>
   <ion-router-outlet main></ion-router-outlet>
 </ion-app>

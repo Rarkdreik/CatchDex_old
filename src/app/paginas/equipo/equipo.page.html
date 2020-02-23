@@ -1,8 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pc de {{repo.getNickCorto()}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <div id='wrapper' class='wrapper'>
-    <ion-back-button defaultHref='main/home' text='' color='dark' class='btn backbutton fixed-top noborder'></ion-back-button>
+    <header id="header">
+      <div class="proximamente">Próximamente</div>
 
-    <div class="row bordeabajo">
+      <!-- <div class="row bordeabajo">
       <div *ngFor='let pokemon of pokemonsEquipo' class='cardPokemon'>
         <div class="row">
           <div class="col-12">
@@ -46,12 +58,12 @@
                 </div>
                 <div class="row margen5">
                   <div class="col-12">
-                    <p class='tipo tipo{{pokemon.tipoUno | uppercase}}'>{{pokemon.tipoUno | uppercase}}</p>
+                    <p class='tipo tipo{{pokemon.tipo_uno | uppercase}}'>{{pokemon.tipo_uno | uppercase}}</p>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <p class='tipo tipo{{pokemon.tipoDos | uppercase}}'>{{pokemon.tipoDos | uppercase}}</p>
+                    <p class='tipo tipo{{pokemon.tipo_dos | uppercase}}'>{{pokemon.tipo_dos | uppercase}}</p>
                   </div>
                 </div>
               </div>
@@ -60,7 +72,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="row">
       <div *ngFor='let pokemon of pokemonsAtrapado' class='cardPokemon'>
@@ -77,12 +88,13 @@
             </div></div></div><div class="col-1"></div></div></div></div><div class="row"><div class="col-12"><div class="row margen5">
               <div class="col-3">{{pokemon.numero_regional}}</div>
               <div class="col-9 text-right">{{pokemon.nombre | uppercase}}</div></div>
-              <div class="row margen5"><div class="col-12"><p class='tipo tipo{{pokemon.tipoUno | uppercase}}'>{{pokemon.tipoUno | uppercase}}</p></div></div>
-              <div class="row"><div class="col-12"><p class='tipo tipo{{pokemon.tipoDos | uppercase}}'>{{pokemon.tipoDos | uppercase}}</p></div></div></div>
+              <div class="row margen5"><div class="col-12"><p class='tipo tipo{{pokemon.tipo_uno | uppercase}}'>{{pokemon.tipo_uno | uppercase}}</p></div></div>
+              <div class="row"><div class="col-12"><p class='tipo tipo{{pokemon.tipo_dos | uppercase}}'>{{pokemon.tipo_dos | uppercase}}</p></div></div></div>
               </div></div>
           </div>
         </div>
-      </div>
+    </div> -->
 
+    </header>
   </div>
 </ion-content>

@@ -1,57 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Region {{repo.getRegion()}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/main/avatar"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-    <div id='wrapper' class='wrapper'>
-      <ion-back-button defaultHref='main/home' text='' color='dark' class='btn backbutton fixed-top noborder'>
-      </ion-back-button>
-      <div class="row">
-        <div *ngFor='let pokemon of pokemons' class='cardPokemon'>
+  <div id='wrapper' class='wrapper'>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-virtual-scroll #virtualScroll [items]="pokemons">
+      <ion-card class="row" *virtualItem="let pokemon;" class='cardPokemon'>
+        <div class="col-12">
+          <!-- Nombre -->
+          <div class="row">
+            <div class="col-4 pokenombre centrar dblock">
+              <p>{{ pokemon.numero_nacional }}</p>
+            </div>
+            <div class="col-8 pokenombre centrar dblock">
+              <p>{{ pokemon.nombre }}</p>
+            </div>
+          </div>
+          <!-- Fin Nombre -->
           <div class="row">
             <div class="col-12">
-              <div class="row" (click)='irDescripcion(pokemon.numero_nacional)'>
-                <div class="col-12">
-                  <img alt='{{pokemon.numero_nacional}}' src='../../assets/images/pokemons/{{pokemon.numero_nacional}}.png' class='ball {{pokemon.ball}}'>
-                </div>
-              </div>
-              <div class="row margen5">
-                <div class="col-12">
-                  <div class="row">
-                    <div class="col-1">
+              <div class="row">
+                <div class="col-8">
+                  <!-- Imagen Pokemon -->
+                  <div class="row" (click)='irDescripcion(pokemon.numero_nacional)'>
+                    <div class="col-12 {{pokemon.ball}}">
+                      <img src='../../assets/images/pokemons/{{pokemon.numero_nacional}}.png'
+                        class="pokeimagen centrar dblock" [alt]="pokemon.numero_nacional" />
                     </div>
-                    <div class="col-10">
+                  </div>
+                  <!-- Fin Imagen Pokemon -->
+                </div>
+                <div class="col-4">
+                  <!-- Barras del elemento -->
+                  <div class="row elementos">
+                    <div class="col-12">
+                      <!-- Tipo Uno -->
                       <div class="row">
-                        <div class="col-4" (click)='capturar(pokemon.numero_nacional, pokemon.numeroEvolucion)'>
+                        <div class="col-12">
+                          <p class='tipo tipo{{pokemon.tipo_uno | uppercase}}'>{{pokemon.tipo_uno | uppercase}}</p>
+                        </div>
+                      </div>
+                      <!-- Fin Tipo Uno -->
+                      <!-- Tipo Dos -->
+                      <div class="row">
+                        <div class="col-12">
+                          <p class='tipo tipo{{pokemon.tipo_dos | uppercase}}'>{{pokemon.tipo_dos | uppercase}}</p>
+                        </div>
+                      </div>
+                      <!-- Fin Tipo Dos -->
+                    </div>
+                  </div>
+                  <!-- Fin Barras del elemento -->
+                  <div class="row">
+                    <div class="col-12">
+                      <!-- Zona Iconos -->
+                      <div class="row iconos">
+                        <!-- Icono Pokeball -->
+                        <div class="col-6 pokeiconos centrar"
+                          (click)='capturar(pokemon.numero_nacional, pokemon.numero_evolucion)'>
                           <img alt='ball' src='../../assets/images/iconos/iconBallBlanco.png'>
                         </div>
-                        <div class="col-4">
-                        </div>
-                        <div class="col-4" (click)='setFavorito(pokemon)'>
+                        <!-- Icono Pokeball -->
+                        <!-- Icono Favorito -->
+                        <div class="col-6 pokeiconos centrar" (click)='setFavorito(pokemon)'>
                           <img alt='fav' src='../../assets/images/iconos/iconStarAzul.png' *ngIf='pokemon.favorito'>
                           <img alt='fav' src='../../assets/images/iconos/iconStarBlanco.png' *ngIf='!pokemon.favorito'>
                         </div>
+                        <!-- Icono Favorito -->
                       </div>
-                    </div>
-                    <div class="col-1">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <div class="row margen5">
-                    <div class="col-3">
-                      {{pokemon.numero_regional}}
-                    </div>
-                    <div class="col-9 text-right">
-                      {{pokemon.nombre | uppercase}}
-                    </div>
-                  </div>
-                  <div class="row margen5">
-                    <div class="col-12">
-                      <p class='tipo tipo{{pokemon.tipoUno | uppercase}}'>{{pokemon.tipoUno | uppercase}}</p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12">
-                      <p class='tipo tipo{{pokemon.tipoDos | uppercase}}'>{{pokemon.tipoDos | uppercase}}</p>
+                      <!-- Fin Zona Iconos -->
                     </div>
                   </div>
                 </div>
@@ -59,7 +87,7 @@
             </div>
           </div>
         </div>
-      </div>
-  
-    </div>
-  </ion-content>
+      </ion-card>
+    </ion-virtual-scroll>
+  </div>
+</ion-content>

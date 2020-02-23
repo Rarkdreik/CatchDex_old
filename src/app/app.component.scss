@@ -1,0 +1,25 @@
+.menu-home {
+    --width: calc(100vw - 45%);
+}
+
+ion-toolbar {
+    background-color: rgb(212, 175, 55);
+    color: black;
+}
+
+ion-title {
+    color: black;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+ion-list {
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+}
+
+ion-item {
+    font-size: x-large;
+    display: grid;
+    justify-content: center;
+}

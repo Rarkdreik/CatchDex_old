@@ -1,76 +1,109 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Entrenador } from '../../modelo/entrenador';
 import { Router } from '@angular/router';
-import { FirebaseService } from '../../servicios/firebase.service';
 import { PokemonInterface } from '../../modelo/Pokemons';
-import { AuthService } from '../../servicios/auth.service';
-import { PokemonService } from '../../servicios/pokemon.service';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-// import { DatabaseService } from '../servicios/database.service';
+import { RepositorioService } from '../../servicios/repositorio.service';
+import { ImagenService } from '../../servicios/imagen.service';
+import { QrService } from '../../servicios/qr.service';
+import { LoadingService } from '../../servicios/loading.service';
+import { AlertsService } from '../../servicios/alerts.service';
+import { FirebaseService } from '../../servicios/firebase.service';
+import { CodigoQrInterface } from '../../modelo/codigoqr';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-avatar',
   templateUrl: 'avatar.page.html',
   styleUrls: ['avatar.page.scss'],
 })
 
 export class AvatarPage implements OnInit {
-  private datos: string[] = [];
-  nombre: string = '';
-  private correo: string = '';
-  region: string = '';
-  pokeini: string = '';
-  pokemon: PokemonInterface;
-  pokemons: PokemonInterface[] = [];
-  entrenador: Entrenador = { Nick: 'RarkdreikHome', Nombre: 'Rik', Exp: 0, Nivel: 1, ContenedorExp: 50, PokeBalls: 20, SuperBalls: 10, UltraBalls: 5, MasterBalls: 1};
-  equipoPokemon: PokemonInterface[] = [];
+  // Atributos para generar qr
+  public qrData: string;
+  public elementType: 'url' | 'canvas' | 'img';
+  // Atributos para mostrar y ocultar la camara qr
+  private ionapp: HTMLElement;
+  private boton: HTMLElement;
 
-  constructor(
-    private route: Router, 
-    public authService: AuthService, 
-    private nativeStorage: NativeStorage,
-    private poke: PokemonService
-    ) { }
-  
-  ngOnInit() {
-    this.nativeStorage.getItem('datos').then(data =>{
-      console.log(data.pokeini)
-      this.nombre = data.usuario;
-      this.correo = data.email;
-      this.region = data.region;
-      this.pokeini = data.pokeini;
-      this.entrenador.Nombre = data.usuario;
-    });
-    
-    let pokemon: PokemonInterface;
-    
-    pokemon = this.poke.getStatsPokemon('255');
-    this.equipoPokemon.push(pokemon);
-    
-    pokemon = this.poke.getStatsPokemon('258');
-    this.equipoPokemon.push(pokemon);
-    
-    pokemon = this.poke.getStatsPokemon('341');
-    this.equipoPokemon.push(pokemon);
-    
-    pokemon = this.poke.getStatsPokemon('360');
-    this.equipoPokemon.push(pokemon);
-    
-    pokemon = this.poke.getStatsPokemon('361');
-    this.equipoPokemon.push(pokemon);
+  constructor( private route: Router, public repo: RepositorioService, public imagen: ImagenService, private qr: QrService, private loading: LoadingService, private alerta: AlertsService, private fire: FirebaseService ) {
+    this.qrData = 'qwerty qwerty qwerty';
+    this.elementType = 'canvas';
   }
 
-  iraregion() {
+  public async ngOnInit() {
+    this.qrData = this.repo.getMaster().nick;
+    let codigoQr: CodigoQrInterface = { correo: this.repo.getCorreo(), codigo: this.qrData, usos: 5 }
+    await this.fire.crearQr(codigoQr);
+  }
+
+  public async galeria() {
+    await this.imagen.selectImage();
+  }
+
+  public iraregion() {
     this.route.navigateByUrl('tabs/tab2');
   }
 
+  public async leerQr() {
+    this.loading.presentLoading('Cargando Lector Qr');
+    await this.qr.prepararScanner().then((status) => {
+      this.qr.escanear();
+    });
+    await this.destruirQr(this.qr);
+    this.qr.prepararScanner().then((status) => {
+      if (status.authorized) {
+        this.crearHTML();
+        // camera permission was granted and use back camera
+        this.qr.usarCamaraTrasera();
+        // start scanning
+        let scanSub = this.qr.escanear().subscribe((text: string) => {
+          // work with scanned text
+          this.qr.escaneado(text);
+          // stop scanning
+          scanSub.unsubscribe();
+          // hide camera preview
+          this.destruirQr(this.qr);
+        });
+      } else if (status.denied) {
+        // camera permission was permanently denied
+        // you must use QRScanner.openSettings() method to guide the user to the settings page
+        // then they can grant the permission from there
+        this.qr.abrirConfiguracion();
+      } else {
+        // permission was denied, but not permanently. You can ask for permission again at a later time.
+        this.destruirQr(this.qr);
+      }
+    }).catch((e: any) => {
+      this.alerta.alertaSimple('Error al tratar de leer codigo Qr', e, 'error');
+      this.destruirQr(this.qr);
+    });
+  }
+
+  private crearHTML() {
+    this.ionapp = window.document.querySelector('app-root') as HTMLElement;
+    let body = window.document.querySelector('body') as HTMLElement;
+    body.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-outline-secondary cerrarQrScanner" >Cerrar Lector Qr</button>');
+    let boton = window.document.querySelector('.cerrarQrScanner') as HTMLElement;
+    boton.addEventListener('click', () => { this.qr.hideCamera().then(() => { this.destruirQr(this.qr) }); }, false);
+    this.boton = boton;
+    this.ionapp.classList.add('has-camera');
+  }
+
+  public eliminarHTML() {
+    try {
+      this.boton.remove()
+      this.ionapp.classList.remove('has-camera');
+    } catch (erroneo) {
+      // El boton es eliminado al escanear el codigo.
+      // No se quiere mostrar al usuario el mensaje de error.
+    }
+  }
+
+  public destruirQr(qr: any) {
+    this.eliminarHTML();
+    return qr.hideCamera().then(() => {
+      qr.destruirQr();
+      this.loading.dismissLoading();
+    });
+  }
+
 }
-
-
-// pokemon: PokemonInterface = {
-//   numero_nacional: '001', numero_regional: '001', region: 'kanto', nombre: 'Balbasaur', tipoUno: 'planta', tipoDos: 'veneno', genero: 'hembra',
-//   descripcion: '', numeroEvolucion: 3, nivelEvolucion: 16, evoluciona: '002', nivel: 0, experiencia: 0, contadorExp: 2, ContenedorExp: 10,
-//   MultiplicadorExp: 2, hp: 500, hp_max: 500, ataque: 10, defensa: 10, ataque_especial: 15, defensa_especial: 15, velocidad: 10, estado: 'nada', IV: 31,
-//   EV: 253,  capturado: 0, favorito: false, ball: 'superBall'
-// };

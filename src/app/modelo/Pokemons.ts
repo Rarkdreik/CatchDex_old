@@ -7,20 +7,16 @@ export interface PokemonInterface {
   numero_regional: string;
   region: string;
   nombre: string;
-  tipoUno: string;
-  tipoDos: string;
+  tipo_uno: string;
+  tipo_dos: string;
   genero: string;
-  descripcion: string;
 
   // Nivel, Evo, Exp
-  numeroEvolucion: number;
-  nivelEvolucion: number;
-  evoluciona: string;
+  numero_evolucion: number;
+  nivel_evolucion: number;
+  evolucion: string;
   nivel?: number;
-  experiencia?: number;
-  ContenedorExp?: number;
-  contadorExp?: number;
-  MultiplicadorExp?: number;
+  exp?: number;
 
   // Puntos de Estado/Estadísticas
   hp?: number;
@@ -34,7 +30,6 @@ export interface PokemonInterface {
   IV?: number;
   EV?: number;
 
-  capturado?: number;
-  favorito?: boolean;
   ball?: string;
+  descripcion?: string;
 }

@@ -1,6 +1,6 @@
 import { ToastService } from './servicios/toast.service';
 import { PosibilidadCapturaService } from './servicios/posibilidad-captura.service';
-import { PokemonService } from './servicios/pokemon.service';
+import { StatsService } from './servicios/estadisticas.service';
 import { LoadingService } from './servicios/loading.service';
 import { FirebaseService } from './servicios/firebase.service';
 import { AuthGuard } from './servicios/auth.guard';
@@ -32,6 +32,14 @@ import { AuthService } from './servicios/auth.service';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RepositorioService } from './servicios/repositorio.service';
+import { File } from '@ionic-native/file/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { ImagenService } from './servicios/imagen.service';
+import { DirectivesModule } from './directivas/directives.module';
+import { QrService } from './servicios/qr.service';
+import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,7 +53,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AngularFirestoreModule,
     IonicStorageModule.forRoot(),
     AngularFireAuthModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DirectivesModule,
   ],
   providers: [
     GooglePlus,
@@ -63,9 +72,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     DatabaseService,
     FirebaseService,
     LoadingService,
-    PokemonService,
+    StatsService,
     PosibilidadCapturaService,
-    ToastService
+    ToastService,
+    RepositorioService,
+    ImagenService,
+    Camera,
+    File,
+    QrService,
+    QRScanner,
+    NgxQRCodeModule,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

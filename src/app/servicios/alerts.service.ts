@@ -50,19 +50,19 @@ export class AlertsService {
    * 
    * Aqui se le facilitan algunos iconos:
    * 
-   * El icono verde de Éxito: 'success'
-   * El rojo de Error: 'error'
-   * El amarillo de Advertencia: 'warning'
-   * El azul claro de Información: 'info'
-   * El gris claro de Pregunta: 'question'
+   * El icono verde de Éxito: 'success'.
+   * El rojo de Error: 'error'.
+   * El amarillo de Advertencia: 'warning'.
+   * El azul claro de Información: 'info'.
+   * El gris claro de Pregunta: 'question'.
    */
   async alertaSimple(title: string, text: string, icon: SweetAlertIcon): Promise<SweetAlertResult> {
     return await Swal.fire(title, text, icon);
   }
 
   /**
-   * 
-   * @param error 
+   * Presenta un alert de errores estandar con la autenticación.
+   * @param error Error de los catch.
    */
   async alertas(error: any): Promise<SweetAlertResult> {
     let titulo: string = '';
@@ -99,6 +99,14 @@ export class AlertsService {
       case 'auth/user-disabled':
         titulo = '¡Cuenta deshabilitada!';
         mensaje = 'Porfavor contacta con el administrador para informarse, y hacer las preguntas necesarias.';
+        break;
+      case 'auth/popup-closed-by-user':
+        titulo = '¡POPUP cerrado por el usuario!';
+        mensaje = 'El usuario ha cerrado la ventana de sesión con google.';
+        break;
+      case 'auth/popup-blocked':
+        titulo = '¡POPUP ha sido bloqueado!';
+        mensaje = 'Habilita las ventanas emergentes en el navegador.';
         break;
       default:
         titulo = error.code;

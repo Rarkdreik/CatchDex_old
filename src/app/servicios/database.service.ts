@@ -6,7 +6,9 @@ import { Platform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { PokemonInterface } from '../modelo/Pokemons';
 import { Entrenador } from '../modelo/entrenador';
-import { PokemonService } from './pokemon.service';
+import { StatsService } from './estadisticas.service';
+import { environment } from '../../environments/environment';
+import { AlertsService } from './alerts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,40 +18,46 @@ export class DatabaseService {
   private database: SQLiteObject;
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  pokemons: Observable<PokemonInterface[]> = new Observable<PokemonInterface[]>();
-  pokemonkanto = new BehaviorSubject([]); pokemonjohto = new BehaviorSubject([]); pokemonhoenn = new BehaviorSubject([]);
-  pokemonCapturados = new BehaviorSubject([]); equipoPokemon = new BehaviorSubject([]);
-  Entrenador = new BehaviorSubject([]);
+  private pokemons: Observable<PokemonInterface[]> = new Observable<PokemonInterface[]>();
+  private pokemonkanto = new BehaviorSubject([]); pokemonjohto = new BehaviorSubject([]); pokemonhoenn = new BehaviorSubject([]);
+  private pokemonCapturados = new BehaviorSubject([]); equipoPokemon = new BehaviorSubject([]);
+  private Entrenador = new BehaviorSubject([]);
 
-  entrenador: Entrenador = { Nick: 'RarkRepo', Nombre: 'Rik', Exp: 0, Nivel: 36, ContenedorExp: 50, PokeBalls: 20, SuperBalls: 10, UltraBalls: 5, MasterBalls: 1 };
+  private entrenador: Entrenador = { nick: 'RarkRepo', exp: 0, nivel: 10, pokeBalls: 20, superBalls: 10, ultraBalls: 5, masterBalls: 1 };
   // equipoPokemon: PokemonInterface[];
-  numero_nacional: string = '';
+  private numero_nacional: string = '';
 
   constructor(
     private plt: Platform,
     private sqlitePorter: SQLitePorter,
     private sqlite: SQLite,
     private http: HttpClient,
-    private poke: PokemonService
+    private poke: StatsService,
+    private alerta: AlertsService
   ) {
+    console.log('base de datos 1');
     this.plt.ready().then(() => {
-      this.sqlite.create({
-        name: 'pokedex.db',
-        location: 'default'
-      })
-        .then((db: SQLiteObject) => {
+      // try {
+        this.sqlite.create({
+          name: 'pokedex.db',
+          location: 'default'
+        }).then((db: SQLiteObject) => {
           this.database = db;
           this.seedDatabase();
         });
+      // } catch (error) {
+      //   this.alerta.alertaSimple('Error de Sqlite', 'No se ha podido crear la base de datos.', 'error');
+      // }
     });
   }
 
-  seedDatabase() {
+  private seedDatabase() {
+    console.log('base de datos 21');
     this.http.get('../../../assets/sqlquery/sqlTablasPokedex.sql', { responseType: 'text' })
       .subscribe(sql => {
         this.sqlitePorter.importSqlToDb(this.database, sql)
           .then(_ => {
-            this.database.executeSql(`SELECT * FROM kanto`, []).then(data => { console.log('qwerty ' + data.rows.length); if (data.rows.length < 2 ) { this.addPokemonBD(); } });
+            this.database.executeSql(`SELECT * FROM kanto`, []).then(data => { if (data.rows.length < 2) { this.addPokemonBD(); } });
             this.loadPokemon('kanto');
             this.loadPokemon('johto');
             this.loadPokemon('hoenn');
@@ -60,9 +68,11 @@ export class DatabaseService {
           })
           .catch(e => console.error(e));
       });
+    console.log('base de datos 2');
   }
 
   getDatabaseState() {
+    console.log('base de datos 3');
     return this.dbReady.asObservable();
   }
 
@@ -71,6 +81,7 @@ export class DatabaseService {
   *************************************************/
 
   loadEntrenador() {
+    console.log('base de datos 4');
     return this.database.executeSql(`SELECT * FROM entrenador`, []).then(data => {
       let entrenador: Entrenador[] = [];
 
@@ -78,9 +89,8 @@ export class DatabaseService {
         for (let i = 0; i < data.rows.length; i++) {
 
           entrenador.push({
-            Nick: data.rows.item(i).Nick, Nombre: data.rows.item(i).Nombre, Exp: data.rows.item(i).Exp, Nivel: data.rows.item(i).Nivel,
-            ContenedorExp: data.rows.item(i).ContenedorExp, PokeBalls: data.rows.item(i).PokeBalls,
-            SuperBalls: data.rows.item(i).SuperBalls, UltraBalls: data.rows.item(i).UltraBalls, MasterBalls: data.rows.item(i).MasterBalls
+            nick: data.rows.item(i).nick, exp: data.rows.item(i).exp, nivel: data.rows.item(i).nivel, pokeBalls: data.rows.item(i).pokeBalls,
+            superBalls: data.rows.item(i).superBalls, ultraBalls: data.rows.item(i).ultraBalls, masterBalls: data.rows.item(i).masterBalls
           });
         }
       }
@@ -89,7 +99,8 @@ export class DatabaseService {
   }
 
   addEntrenador(entrenador: Entrenador) {
-    let data = [entrenador.Nick, entrenador.Nombre, entrenador.Exp, entrenador.Nivel, entrenador.ContenedorExp, entrenador.PokeBalls, entrenador.SuperBalls, entrenador.UltraBalls, entrenador.MasterBalls];
+    console.log('base de datos 5');
+    let data = Object.values(entrenador);
 
     return this.database.executeSql(`INSERT or IGNORE INTO entrenador VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, data).then(data => {
       this.loadEntrenador();
@@ -97,23 +108,26 @@ export class DatabaseService {
   }
 
   getEntrenadorPromise(entrenador: Entrenador): Promise<Entrenador> {
-    return this.database.executeSql(`SELECT * FROM entrenador WHERE Nick = ?`, [entrenador.Nick]).then(data => {
+    console.log('base de datos 6');
+    return this.database.executeSql(`SELECT * FROM entrenador WHERE nick = ?`, [entrenador.nick]).then(data => {
       return {
-        Nick: data.rows.item(0).Nick, Nombre: data.rows.item(0).Nombre, Exp: data.rows.item(0).Exp, Nivel: data.rows.item(0).Nivel, ContenedorExp: data.rows.item(0).ContenedorExp,
-        PokeBalls: data.rows.item(0).PokeBalls, SuperBalls: data.rows.item(0).SuperBalls, UltraBalls: data.rows.item(0).UltraBalls, MasterBalls: data.rows.item(0).MasterBalls,
+        nick: data.rows.item(0).nick, exp: data.rows.item(0).exp, nivel: data.rows.item(0).nivel, pokeBalls: data.rows.item(0).pokeBalls,
+        superBalls: data.rows.item(0).superBalls, ultraBalls: data.rows.item(0).ultraBalls, masterBalls: data.rows.item(0).masterBalls,
       }
     });
   }
 
   deleteEntrenador(entrenador: Entrenador) {
-    return this.database.executeSql(`DELETE FROM entrenador WHERE Nick = ?`, [entrenador.Nick]).then(_ => {
+    console.log('base de datos 7');
+    return this.database.executeSql(`DELETE FROM entrenador WHERE nick = ?`, [entrenador.nick]).then(_ => {
       this.loadEntrenador();
     });
   }
 
   updateEntrenador(entrenador: Entrenador) {
-    let data = [entrenador.Nick];
-    return this.database.executeSql(`UPDATE entrenador SET porConstruir WHERE Nick = ${entrenador.Nick}`, data).then(data => {
+    console.log('base de datos 8');
+    let data = [entrenador.nick];
+    return this.database.executeSql(`UPDATE entrenador SET porConstruir WHERE nick = ${entrenador.nick}`, data).then(data => {
       this.loadEntrenador();
     })
   }
@@ -123,6 +137,7 @@ export class DatabaseService {
   *************************************************/
 
   loadPokemonAtrapado() {
+    console.log('base de datos 9');
     return this.database.executeSql(`SELECT * FROM atrapado`, []).then(data => {
       let poke: PokemonInterface[] = [];
 
@@ -130,11 +145,11 @@ export class DatabaseService {
         for (let i = 0; i < data.rows.length; i++) {
 
           poke.push({
-            numero_nacional: data.rows.item(i).numero_nacional, numero_regional: data.rows.item(i).numero_regional, region: data.rows.item(i).region, nombre: data.rows.item(i).nombre, tipoUno: data.rows.item(i).tipoUno, tipoDos: data.rows.item(i).tipoDos,
-            genero: data.rows.item(i).genero, descripcion: data.rows.item(i).descripcion, numeroEvolucion: data.rows.item(i).numeroEvolucion, nivelEvolucion: data.rows.item(i).nivelEvolucion, evoluciona: data.rows.item(i).evoluciona,
-            nivel: data.rows.item(i).nivel, experiencia: data.rows.item(i).experiencia, ContenedorExp: data.rows.item(i).ContenedorExp, hp: data.rows.item(i).hp, hp_max: data.rows.item(i).hp_max, ataque: data.rows.item(i).ataque, defensa: data.rows.item(i).defensa,
+            numero_nacional: data.rows.item(i).numero_nacional, numero_regional: data.rows.item(i).numero_regional, region: data.rows.item(i).region, nombre: data.rows.item(i).nombre, tipo_uno: data.rows.item(i).tipo_uno, tipo_dos: data.rows.item(i).tipo_dos,
+            genero: data.rows.item(i).genero, descripcion: data.rows.item(i).descripcion, numero_evolucion: data.rows.item(i).numero_evolucion, nivel_evolucion: data.rows.item(i).nivel_evolucion, evolucion: data.rows.item(i).evolucion,
+            nivel: data.rows.item(i).nivel, exp: data.rows.item(i).exp, hp: data.rows.item(i).hp, hp_max: data.rows.item(i).hp_max, ataque: data.rows.item(i).ataque, defensa: data.rows.item(i).defensa,
             ataque_especial: data.rows.item(i).ataque_especial, defensa_especial: data.rows.item(i).defensa_especial, velocidad: data.rows.item(i).velocidad, estado: data.rows.item(i).estado,
-            IV: data.rows.item(i).IV, EV: data.rows.item(i).EV, capturado: data.rows.item(i).capturado, favorito: data.rows.item(i).favorito, ball: data.rows.item(i).ball
+            IV: data.rows.item(i).IV, EV: data.rows.item(i).EV, ball: data.rows.item(i).ball
           });
         }
       }
@@ -143,22 +158,21 @@ export class DatabaseService {
   }
 
   addPokemonAtrapado(poke: PokemonInterface) {
-    let data = [poke.numero_nacional, poke.numero_regional, poke.region, poke.nombre, poke.tipoUno, poke.tipoDos, poke.genero, poke.descripcion, poke.numeroEvolucion, poke.nivelEvolucion, poke.evoluciona, poke.nivel,
-    poke.experiencia, poke.ContenedorExp, poke.hp, poke.hp_max, poke.ataque, poke.defensa, poke.ataque_especial, poke.defensa_especial, poke.velocidad, poke.estado,
-    poke.IV, poke.EV, poke.capturado, poke.favorito, poke.ball];
-    console.log(`INSERT or IGNORE INTO atrapado VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, data);
-    return this.database.executeSql(`INSERT or IGNORE INTO atrapado VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, data).then(data => {
+    console.log('base de datos 10');
+    let data = Object.values(poke);
+    return this.database.executeSql(environment.sql_insert + `atrapado` + environment.sql_poke_columnas, data).then(ok => {
       this.loadPokemonAtrapado();
     });
   }
 
   getPokemonAtrapado(poke: PokemonInterface): Promise<PokemonInterface> {
+    console.log('base de datos 11');
     return this.database.executeSql(`SELECT * FROM atrapado WHERE numero_nacional = ?`, [poke.numero_nacional]).then(data => {
       return {
-        numero_nacional: data.rows.item(0).numero_nacional, numero_regional: data.rows.item(0).numero_regional, region: data.rows.item(0).region, nombre: data.rows.item(0).nombre, tipoUno: data.rows.item(0).tipoUno, tipoDos: data.rows.item(0).tipoDos,
-        genero: data.rows.item(0).genero, descripcion: data.rows.item(0).descripcion, numeroEvolucion: data.rows.item(0).numeroEvolucion, nivelEvolucion: data.rows.item(0).nivelEvolucion, evoluciona: data.rows.item(0).evoluciona,
-        nivel: (data.rows.item(0).nivel !== undefined ? data.rows.item(0).nivel : ''), experiencia: (data.rows.item(0).experiencia !== undefined ? data.rows.item(0).experiencia : ''),
-        ContenedorExp: (data.rows.item(0).ContenedorExp !== undefined ? data.rows.item(0).ContenedorExp : ''),
+        numero_nacional: data.rows.item(0).numero_nacional, numero_regional: data.rows.item(0).numero_regional, region: data.rows.item(0).region, nombre: data.rows.item(0).nombre, tipo_uno: data.rows.item(0).tipo_uno, tipo_dos: data.rows.item(0).tipo_dos,
+        genero: data.rows.item(0).genero, descripcion: data.rows.item(0).descripcion, numero_evolucion: data.rows.item(0).numero_evolucion, nivel_evolucion: data.rows.item(0).nivel_evolucion, evolucion: data.rows.item(0).evolucion,
+        nivel: (data.rows.item(0).nivel !== undefined ? data.rows.item(0).nivel : ''), exp: (data.rows.item(0).exp !== undefined ? data.rows.item(0).exp : ''),
+
         hp: (data.rows.item(0).hp !== undefined ? data.rows.item(0).hp : ''), hp_max: (data.rows.item(0).hp_max !== undefined ? data.rows.item(0).hp_max : ''),
         ataque: (data.rows.item(0).ataque !== undefined ? data.rows.item(0).ataque : ''), defensa: (data.rows.item(0).defensa !== undefined ? data.rows.item(0).defensa : ''),
         ataque_especial: (data.rows.item(0).ataque_especial !== undefined ? data.rows.item(0).ataque_especial : ''), defensa_especial: (data.rows.item(0).defensa_especial !== undefined ? data.rows.item(0).defensa_especial : ''),
@@ -170,12 +184,14 @@ export class DatabaseService {
   }
 
   deletePokemonAtrapado(poke: PokemonInterface) {
+    console.log('base de datos 12');
     return this.database.executeSql(`DELETE FROM atrapado WHERE numero_nacional = ?`, [poke.numero_nacional]).then(_ => {
       this.loadPokemon(poke.region);
     });
   }
 
   updatePokemonAtrapado(poke: PokemonInterface) {
+    console.log('base de datos 13');
     let data = [poke.numero_nacional, , poke.numero_regional];
     return this.database.executeSql(`UPDATE atrapado SET porConstruir WHERE numero_nacional = ${poke.numero_nacional}`, data).then(data => {
       this.loadPokemon(poke.region);
@@ -188,6 +204,7 @@ export class DatabaseService {
   *************************************************/
 
   loadPokemonEquipo() {
+    console.log('base de datos 14');
     return this.database.executeSql(`SELECT * FROM equipo`, []).then(data => {
       let poke: PokemonInterface[] = [];
 
@@ -195,11 +212,11 @@ export class DatabaseService {
         for (let i = 0; i < data.rows.length; i++) {
 
           poke.push({
-            numero_nacional: data.rows.item(i).numero_nacional, numero_regional: data.rows.item(i).numero_regional, region: data.rows.item(i).region, nombre: data.rows.item(i).nombre, tipoUno: data.rows.item(i).tipoUno, tipoDos: data.rows.item(i).tipoDos,
-            genero: data.rows.item(i).genero, descripcion: data.rows.item(i).descripcion, numeroEvolucion: data.rows.item(i).numeroEvolucion, nivelEvolucion: data.rows.item(i).nivelEvolucion, evoluciona: data.rows.item(i).evoluciona,
-            nivel: data.rows.item(i).nivel, experiencia: data.rows.item(i).experiencia, ContenedorExp: data.rows.item(i).ContenedorExp, hp: data.rows.item(i).hp, hp_max: data.rows.item(i).hp_max, ataque: data.rows.item(i).ataque, defensa: data.rows.item(i).defensa,
+            numero_nacional: data.rows.item(i).numero_nacional, numero_regional: data.rows.item(i).numero_regional, region: data.rows.item(i).region, nombre: data.rows.item(i).nombre, tipo_uno: data.rows.item(i).tipo_uno, tipo_dos: data.rows.item(i).tipo_dos,
+            genero: data.rows.item(i).genero, descripcion: data.rows.item(i).descripcion, numero_evolucion: data.rows.item(i).numero_evolucion, nivel_evolucion: data.rows.item(i).nivel_evolucion, evolucion: data.rows.item(i).evolucion,
+            nivel: data.rows.item(i).nivel, exp: data.rows.item(i).exp, hp: data.rows.item(i).hp, hp_max: data.rows.item(i).hp_max, ataque: data.rows.item(i).ataque, defensa: data.rows.item(i).defensa,
             ataque_especial: data.rows.item(i).ataque_especial, defensa_especial: data.rows.item(i).defensa_especial, velocidad: data.rows.item(i).velocidad, estado: data.rows.item(i).estado,
-            IV: data.rows.item(i).IV, EV: data.rows.item(i).EV, capturado: data.rows.item(i).capturado, favorito: data.rows.item(i).favorito, ball: data.rows.item(i).ball
+            IV: data.rows.item(i).IV, EV: data.rows.item(i).EV, ball: data.rows.item(i).ball
           });
         }
       }
@@ -208,13 +225,11 @@ export class DatabaseService {
   }
 
   addPokemonEquipo(poke: PokemonInterface) {
+    console.log('base de datos 15');
     this.equipoPokemon.subscribe(pokemons => {
-      if (pokemons.length < 6) {
-        let data = [poke.numero_nacional, poke.numero_regional, poke.region, poke.nombre, poke.tipoUno, poke.tipoDos, poke.genero, poke.descripcion, poke.numeroEvolucion, poke.nivelEvolucion, poke.evoluciona, poke.nivel,
-        poke.experiencia, poke.ContenedorExp, poke.hp, poke.hp_max, poke.ataque, poke.defensa, poke.ataque_especial, poke.defensa_especial, poke.velocidad, poke.estado,
-        poke.IV, poke.EV, poke.capturado, poke.favorito, poke.ball];
-        console.log(`INSERT or IGNORE INTO equipo VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, data);
-        return this.database.executeSql(`INSERT or IGNORE INTO equipo VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, data).then(data => {
+      if (pokemons.length <= 6) {
+        let data = Object.values(poke);
+        return this.database.executeSql(environment.sql_insert + `equipo` + environment.sql_poke_columnas, data).then(data => {
           this.loadPokemonEquipo();
         });
       }
@@ -224,10 +239,10 @@ export class DatabaseService {
   getPokemonEquipo(poke: PokemonInterface): Promise<PokemonInterface> {
     return this.database.executeSql(`SELECT * FROM equipo WHERE numero_nacional = ?`, [poke.numero_nacional]).then(data => {
       return {
-        numero_nacional: data.rows.item(0).numero_nacional, numero_regional: data.rows.item(0).numero_regional, region: data.rows.item(0).region, nombre: data.rows.item(0).nombre, tipoUno: data.rows.item(0).tipoUno, tipoDos: data.rows.item(0).tipoDos,
-        genero: data.rows.item(0).genero, descripcion: data.rows.item(0).descripcion, numeroEvolucion: data.rows.item(0).numeroEvolucion, nivelEvolucion: data.rows.item(0).nivelEvolucion, evoluciona: data.rows.item(0).evoluciona,
-        nivel: (data.rows.item(0).nivel !== undefined ? data.rows.item(0).nivel : ''), experiencia: (data.rows.item(0).experiencia !== undefined ? data.rows.item(0).experiencia : ''),
-        ContenedorExp: (data.rows.item(0).ContenedorExp !== undefined ? data.rows.item(0).ContenedorExp : ''),
+        numero_nacional: data.rows.item(0).numero_nacional, numero_regional: data.rows.item(0).numero_regional, region: data.rows.item(0).region, nombre: data.rows.item(0).nombre, tipo_uno: data.rows.item(0).tipo_uno, tipo_dos: data.rows.item(0).tipo_dos,
+        genero: data.rows.item(0).genero, descripcion: data.rows.item(0).descripcion, numero_evolucion: data.rows.item(0).numero_evolucion, nivel_evolucion: data.rows.item(0).nivel_evolucion, evolucion: data.rows.item(0).evolucion,
+        nivel: (data.rows.item(0).nivel !== undefined ? data.rows.item(0).nivel : ''), exp: (data.rows.item(0).exp !== undefined ? data.rows.item(0).exp : ''),
+
         hp: (data.rows.item(0).hp !== undefined ? data.rows.item(0).hp : ''), hp_max: (data.rows.item(0).hp_max !== undefined ? data.rows.item(0).hp_max : ''),
         ataque: (data.rows.item(0).ataque !== undefined ? data.rows.item(0).ataque : ''), defensa: (data.rows.item(0).defensa !== undefined ? data.rows.item(0).defensa : ''),
         ataque_especial: (data.rows.item(0).ataque_especial !== undefined ? data.rows.item(0).ataque_especial : ''), defensa_especial: (data.rows.item(0).defensa_especial !== undefined ? data.rows.item(0).defensa_especial : ''),
@@ -263,11 +278,11 @@ export class DatabaseService {
         for (let i = 0; i < data.rows.length; i++) {
 
           poke.push({
-            numero_nacional: data.rows.item(i).numero_nacional, numero_regional: data.rows.item(i).numero_regional, region: data.rows.item(i).region, nombre: data.rows.item(i).nombre, tipoUno: data.rows.item(i).tipoUno, tipoDos: data.rows.item(i).tipoDos,
-            genero: data.rows.item(i).genero, descripcion: data.rows.item(i).descripcion, numeroEvolucion: data.rows.item(i).numeroEvolucion, nivelEvolucion: data.rows.item(i).nivelEvolucion, evoluciona: data.rows.item(i).evoluciona,
-            nivel: data.rows.item(i).nivel, experiencia: data.rows.item(i).experiencia, ContenedorExp: data.rows.item(i).ContenedorExp, hp: data.rows.item(i).hp, hp_max: data.rows.item(i).hp_max, ataque: data.rows.item(i).ataque, defensa: data.rows.item(i).defensa,
+            numero_nacional: data.rows.item(i).numero_nacional, numero_regional: data.rows.item(i).numero_regional, region: data.rows.item(i).region, nombre: data.rows.item(i).nombre, tipo_uno: data.rows.item(i).tipo_uno, tipo_dos: data.rows.item(i).tipo_dos,
+            genero: data.rows.item(i).genero, descripcion: data.rows.item(i).descripcion, numero_evolucion: data.rows.item(i).numero_evolucion, nivel_evolucion: data.rows.item(i).nivel_evolucion, evolucion: data.rows.item(i).evolucion,
+            nivel: data.rows.item(i).nivel, exp: data.rows.item(i).exp, hp: data.rows.item(i).hp, hp_max: data.rows.item(i).hp_max, ataque: data.rows.item(i).ataque, defensa: data.rows.item(i).defensa,
             ataque_especial: data.rows.item(i).ataque_especial, defensa_especial: data.rows.item(i).defensa_especial, velocidad: data.rows.item(i).velocidad, estado: data.rows.item(i).estado,
-            IV: data.rows.item(i).IV, EV: data.rows.item(i).EV, capturado: data.rows.item(i).capturado, favorito: data.rows.item(i).favorito, ball: data.rows.item(i).ball
+            IV: data.rows.item(i).IV, EV: data.rows.item(i).EV, ball: data.rows.item(i).ball
           });
         }
       }
@@ -280,29 +295,28 @@ export class DatabaseService {
   }
 
   addPokemon(poke: PokemonInterface) {
-    let data = [poke.numero_nacional, poke.numero_regional, poke.region, poke.nombre, poke.tipoUno, poke.tipoDos, poke.genero, poke.descripcion, poke.numeroEvolucion, poke.nivelEvolucion, poke.evoluciona, poke.nivel,
-    poke.experiencia, poke.ContenedorExp, poke.hp, poke.hp_max, poke.ataque, poke.defensa, poke.ataque_especial, poke.defensa_especial, poke.velocidad, poke.estado,
-    poke.IV, poke.EV, poke.capturado, poke.favorito, poke.ball];
-    console.log(`INSERT or IGNORE INTO ${poke.region} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, data);
-    return this.database.executeSql(`INSERT or IGNORE INTO ${poke.region} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, data).then(data => {
+    let data = Object.values(poke);
+    return this.database.executeSql(environment.sql_insert + `${poke.region} ` + environment.sql_poke_columnas, data).then(data => {
       this.loadPokemon(poke.region);
     });
   }
 
   getPokemon(poke: PokemonInterface): Promise<PokemonInterface> {
     return this.database.executeSql(`SELECT * FROM ${poke.region} WHERE numero_nacional = ?`, [poke.numero_nacional]).then(data => {
-      return {
-        numero_nacional: data.rows.item(0).numero_nacional, numero_regional: data.rows.item(0).numero_regional, region: data.rows.item(0).region, nombre: data.rows.item(0).nombre, tipoUno: data.rows.item(0).tipoUno, tipoDos: data.rows.item(0).tipoDos,
-        genero: data.rows.item(0).genero, descripcion: data.rows.item(0).descripcion, numeroEvolucion: data.rows.item(0).numeroEvolucion, nivelEvolucion: data.rows.item(0).nivelEvolucion, evoluciona: data.rows.item(0).evoluciona,
-        nivel: (data.rows.item(0).nivel !== undefined ? data.rows.item(0).nivel : ''), experiencia: (data.rows.item(0).experiencia !== undefined ? data.rows.item(0).experiencia : ''),
-        ContenedorExp: (data.rows.item(0).ContenedorExp !== undefined ? data.rows.item(0).ContenedorExp : ''),
-        hp: (data.rows.item(0).hp !== undefined ? data.rows.item(0).hp : ''), hp_max: (data.rows.item(0).hp_max !== undefined ? data.rows.item(0).hp_max : ''),
-        ataque: (data.rows.item(0).ataque !== undefined ? data.rows.item(0).ataque : ''), defensa: (data.rows.item(0).defensa !== undefined ? data.rows.item(0).defensa : ''),
-        ataque_especial: (data.rows.item(0).ataque_especial !== undefined ? data.rows.item(0).ataque_especial : ''), defensa_especial: (data.rows.item(0).defensa_especial !== undefined ? data.rows.item(0).defensa_especial : ''),
-        velocidad: (data.rows.item(0).velocidad !== undefined ? data.rows.item(0).velocidad : ''), estado: (data.rows.item(0).estado !== undefined ? data.rows.item(0).estado : ''),
-        IV: (data.rows.item(0).IV !== undefined ? data.rows.item(0).IV : ''), EV: (data.rows.item(0).EV !== undefined ? data.rows.item(0).EV : ''), capturado: (data.rows.item(0).capturado !== undefined ? data.rows.item(0).capturado : ''), favorito: (data.rows.item(0).favorito !== undefined ? data.rows.item(0).favorito : ''),
-        ball: (data.rows.item(0).ball !== undefined ? data.rows.item(0).ball : '')
-      }
+      let pokemon: PokemonInterface;
+      return pokemon = data.rows.item(0);
+      // return {
+      //   numero_nacional: data.rows.item(0).numero_nacional, numero_regional: data.rows.item(0).numero_regional, region: data.rows.item(0).region, nombre: data.rows.item(0).nombre, tipo_uno: data.rows.item(0).tipo_uno, tipo_dos: data.rows.item(0).tipo_dos,
+      //   genero: data.rows.item(0).genero, descripcion: data.rows.item(0).descripcion, numero_evolucion: data.rows.item(0).numero_evolucion, nivel_evolucion: data.rows.item(0).nivel_evolucion, evolucion: data.rows.item(0).evolucion,
+      //   nivel: (data.rows.item(0).nivel !== undefined ? data.rows.item(0).nivel : ''), exp: (data.rows.item(0).exp !== undefined ? data.rows.item(0).exp : ''),
+
+      //   hp: (data.rows.item(0).hp !== undefined ? data.rows.item(0).hp : ''), hp_max: (data.rows.item(0).hp_max !== undefined ? data.rows.item(0).hp_max : ''),
+      //   ataque: (data.rows.item(0).ataque !== undefined ? data.rows.item(0).ataque : ''), defensa: (data.rows.item(0).defensa !== undefined ? data.rows.item(0).defensa : ''),
+      //   ataque_especial: (data.rows.item(0).ataque_especial !== undefined ? data.rows.item(0).ataque_especial : ''), defensa_especial: (data.rows.item(0).defensa_especial !== undefined ? data.rows.item(0).defensa_especial : ''),
+      //   velocidad: (data.rows.item(0).velocidad !== undefined ? data.rows.item(0).velocidad : ''), estado: (data.rows.item(0).estado !== undefined ? data.rows.item(0).estado : ''),
+      //   IV: (data.rows.item(0).IV !== undefined ? data.rows.item(0).IV : ''), EV: (data.rows.item(0).EV !== undefined ? data.rows.item(0).EV : ''), capturado: (data.rows.item(0).capturado !== undefined ? data.rows.item(0).capturado : ''), favorito: (data.rows.item(0).favorito !== undefined ? data.rows.item(0).favorito : ''),
+      //   ball: (data.rows.item(0).ball !== undefined ? data.rows.item(0).ball : '')
+      // }
     });
   }
 

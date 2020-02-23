@@ -1,119 +1,182 @@
-<div class='contenedor'>
-  <div id="wrapper" class="wrapper">
-    <ion-back-button defaultHref='home' text='' color='dark fixed-top' class='backbuton'></ion-back-button>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Region {{repo.getRegion()}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/tabs/tab2"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div id='wrapper' class='wrapper'>
+    <header id="header">
 
-    <ion-row class='row tarjeta bordeabajo width100'>
-      <ion-row class='row width100'>
-        <ion-col class='col-6 bordederecha'><img alt='{{ pokemon.numero_nacional }}'
-            src='../../assets/images/pokemons/{{ pokemon.numero_nacional }}.png'
-            class='center pokemon ball {{pokemon.ball}}'></ion-col>
-        <ion-col>
-          <ion-row class='row'>
-            <!-- <ion-col class='col-6 class='center'>{{pokemon.tipoUno}}</ion-col> -->
-            <ion-col class='tipo tipo{{pokemon.tipoUno|uppercase}}'>{{pokemon.tipoUno|uppercase}}</ion-col>
-          </ion-row>
-          <ion-row class='row'>
-            <!-- <ion-col class='col-6 class='center'>{{pokemon.tipoDos}}</ion-col> -->
-            <ion-col class='tipo tipo{{pokemon.tipoDos|uppercase}}'>{{pokemon.tipoDos|uppercase}}</ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-col class='col-12'>
-        <p>{{ pokemon.descripcion }}</p>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class='row center tarjeta bordeabajo width100' *ngIf='!(pokemon.nivelEvolucion === 0);' [ngClass]='ocultar1'>
-      <p>Evoluciona al:</p>
-      <ion-row class='row'>
-        <ion-col class='col-4'><img alt='{{ pokemon.numero_nacional }}'
-            src='../../assets/images/pokemons/{{ pokemon.numero_nacional }}.png'
-            class='center pokemon ball {{pokemon.ball}}'></ion-col>
-        <ion-col class='col-4 width100' style='align-self: center;'>
-          <p class='width100'>Nivel: {{ pokemon.nivelEvolucion }}</p>
-        </ion-col>
-        <ion-col class='col-4'> <img alt='{{ pokemon.evoluciona }}'
-            src='../../assets/images/pokemons/{{ pokemon.evoluciona }}.png'
-            class='center pokemon ball {{pokemon.ball}}'></ion-col>
-      </ion-row>
-    </ion-row>
-    <ion-row class='row center tarjeta bordeabajo width100' *ngIf='pokemon.nivelEvolucion === 0' [ngClass]='ocultar1'>
-      <ion-row class='row width100'>
-        <p class='width100'>No tiene evolución</p>
-      </ion-row>
-      <ion-row class='row'><img alt='{{ pokemon.numero_nacional }}'
-          src='../../assets/images/pokemons/{{ pokemon.numero_nacional }}.png'
-          class='center pokemon ball {{pokemon.ball}}'></ion-row>
-    </ion-row>
-    <ion-row class='row center tarjeta bordeabajo width100' [ngClass]='ocultar2'>
-      <ion-row class='row'>
-        <ion-col class=' text-center namePokemon'>{{ pokemon.nombre }}</ion-col>
-      </ion-row>
-      <ion-row class='row letra14'>
-        <ion-row class='row width100'>
-          <ion-col class='col-4 text-left'>Nivel: {{ pokemon.nivel }}</ion-col>
-          <ion-col class='col-4 text-center'>{{ pokemon.numero_nacional }}</ion-col>
-          <ion-col class='col-4'>
-            <div class='text-right' *ngIf='genero'>
-              <ion-icon class='text-right' name='md-female'></ion-icon>
+      <div class="row width-100 margin-bottom-15">
+        <div class="col-12">
+          <!-- Bloque Uno -->
+          <ion-card class="row padding-10">
+            <div class="col-12">
+              <div class="row">
+                <!-- Bloque Imagen Pokemon -->
+                <div class="col-6">
+                  <div class="row">
+                    <div class="col-12">
+                      <img alt='{{ pokemon.numero_nacional }}'
+                        src='../../assets/images/pokemons/{{ pokemon.numero_nacional }}.png' class='{{pokemon.ball}}' />
+                    </div>
+                  </div>
+                </div>
+                <!-- Fin Bloque Imagen Pokemon -->
+                <!-- Bloque elementos -->
+                <div class="col-6">
+                  <!-- Tipo Uno -->
+                  <div class="row">
+                    <div class="col-12">
+                      <div class='tipo tipo{{pokemon.tipo_uno|uppercase}}'>{{pokemon.tipo_uno|uppercase}}</div>
+                    </div>
+                  </div>
+                  <!-- Fin Tipo Uno -->
+                  <!-- Tipo Dos -->
+                  <div class="row">
+                    <div class="col-12">
+                      <div class='tipo tipo{{pokemon.tipo_dos|uppercase}}'>{{pokemon.tipo_dos|uppercase}}</div>
+                    </div>
+                  </div>
+                  <!-- Fin Tipo Dos -->
+                  <!-- Descripcion -->
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="font-size-10 text-justify">{{ pokemon.descripcion }}</p>
+                    </div>
+                  </div>
+                  <!-- Fin Descripcion -->
+                </div>
+                <!-- Fin Bloque elementos -->
+              </div>
             </div>
-            <div class='text-right' *ngIf='!genero'>
-              <ion-icon class='text-right' name='md-male'></ion-icon>
+          </ion-card>
+          <!-- Fin Bloque Uno -->
+
+          <!-- Bloque Dos Parte 1 -->
+          <ion-card class="row padding-10" *ngIf='!(pokemon.nivel_evolucion === 0);' [ngClass]='ocultar1'>
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12 text-center titulo">Evoluciona al:</div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <img alt='{{ pokemon.numero_nacional }}'
+                    src='../../assets/images/pokemons/{{ pokemon.numero_nacional }}.png' class='{{pokemon.ball}}' />
+                </div>
+                <div class="col-4 margin-auto">
+                  <p class='width-100'>Nivel: {{ pokemon.nivel_evolucion }}</p>
+                </div>
+                <div class="col-4">
+                  <img alt='{{ pokemon.evolucion }}' src='../../assets/images/pokemons/{{ pokemon.evolucion }}.png'
+                    class='{{pokemon.ball}} /'>
+                </div>
+              </div>
             </div>
-          </ion-col>
-        </ion-row>
-        <!-- <ion-row class='width100'> <ion-col class='text-center namePokemon'>{{ pokemon.nombre }}</ion-col> </ion-row> -->
-        <ion-row class='width100'>
-          <ion-col class='col-6 textoenlinea paddingright10'>Ataque: <p class='text-right'>{{ pokemon.ataque }}</p>
-          </ion-col>
-          <ion-col class='col-6 textoenlinea paddingright10'>Ataque M: <p class='text-right'>
-              {{ pokemon.ataque_especial }}</p>
-          </ion-col>
-        </ion-row>
-        <ion-row class='width100'>
-          <ion-col class='col-6 textoenlinea paddingright10'>Defensa: <p class='text-right'>{{ pokemon.defensa }}</p>
-          </ion-col>
-          <ion-col class='col-6 textoenlinea paddingright10'>Defensa M: <p class='text-right'>
-              {{ pokemon.defensa_especial }}</p>
-          </ion-col>
-        </ion-row>
-        <ion-row class='width100'>
-          <ion-col class='col-6 textoenlinea paddingright10'>Velocidad: <p class='text-right'>{{ pokemon.velocidad }}
-            </p>
-          </ion-col>
-          <ion-col class='col-6 textoenlinea paddingright10'>Evoluciona: <p class='text-right'>
-              {{ pokemon.nivelEvolucion }}</p>
-          </ion-col>
-        </ion-row>
-      </ion-row>
-    </ion-row>
+          </ion-card>
+          <!-- Bloque Dos Fin Parte 1 -->
 
-    <ion-row class='row width100'>
-        <ion-col class='col-6 bordederecha' style="height: 10px; height: 30px; margin-top: -6px;"></ion-col>
-        <ion-col class='col-6 '>
-        </ion-col>
-      </ion-row>
+          <!-- Bloque Dos Parte 2 -->
+          <ion-card class="row padding-10 margin-bottom-15" *ngIf='(pokemon.nivel_evolucion === 0);' [ngClass]='ocultar1'>
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12 text-center titulo">No tiene evolución</div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <img alt='{{ pokemon.numero_nacional }}'
+                    src='../../assets/images/pokemons/{{ pokemon.numero_nacional }}.png'
+                    class='no-evolucion {{pokemon.ball}}' />
+                </div>
+              </div>
+            </div>
+          </ion-card>
+          <!-- Bloque Dos Fin Parte 2 -->
 
-    <!-- <ion-row class='center tarjeta fixed-bottom'>
-      <ion-row class='letra14'>
-        <ion-row class='width100'>
-          <ion-col class='col-6><ion-button (click)='capturar(pokemon.numero_nacional, pokemon.numeroEvolucion)'>Capurar</ion-button></ion-col>
-        </ion-row>
-      </ion-row>
-    </ion-row> -->
+          <!-- Bloque Stats -->
+          <ion-card class='row' [ngClass]='ocultar2'>
+            <div class='col-12'>
+              <div class='row margin-bottom-5'>
+                <div class='col-12'>
+                  <div class='text-center'>{{ pokemon.nombre }}</div>
+                </div>
+              </div>
+              <div class='row letra14'>
 
+                <div class='col-12'>
+                  <div class='row'>
+                    <div class='col-6 text-left en-linea'>
+                      <p>Nivel: </p>
+                      <p>{{ pokemon.nivel }}</p>
+                    </div>
+                    <div class='col-3 text-center'>{{ pokemon.numero_nacional }}</div>
+                    <div class='col-3'>
+                      <div class='text-right' *ngIf='genero'>
+                        <ion-icon class='text-right' name='md-female'></ion-icon>
+                      </div>
+                      <div class='text-right' *ngIf='!genero'>
+                        <ion-icon class='text-right' name='md-male'></ion-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Bloque de ataque -->
+                  <div class='row'>
+                    <div class='col-6 en-linea'>Ataque:
+                      <p class='text-right'>{{ pokemon.ataque }}</p>
+                    </div>
+                    <div class='col-6 en-linea'>Ataque M:
+                      <p class='text-right'>{{ pokemon.ataque_especial }}</p>
+                    </div>
+                  </div>
+                  <!-- Fin Bloque de ataque -->
+                  <!-- Bloque de defensa -->
+                  <div class='row'>
+                    <div class='col-6 en-linea'>Defensa:
+                      <p class='text-right'>{{ pokemon.defensa }}</p>
+                    </div>
+                    <div class='col-6 en-linea'>Defensa M:
+                      <p class='text-right'>{{ pokemon.defensa_especial }}</p>
+                    </div>
+                  </div>
+                  <!-- Fin Bloque de defensa -->
+                  <!-- Bloque de velocidad -->
+                  <div class='row'>
+                    <div class='col-6 en-linea'>Velocidad:
+                      <p class='text-right'>{{ pokemon.velocidad }}</p>
+                    </div>
+                    <div class='col-6 en-linea'>Evoluciona:
+                      <p class='text-right'>{{ pokemon.nivel_evolucion }}</p>
+                    </div>
+                  </div>
+                  <!-- Fin Bloque de velocidad -->
+                </div>
+              </div>
+            </div>
+          </ion-card>
+          <!-- Fin Bloque Stats -->
 
-    <ion-fab vertical='bottom' horizontal='end' id='fab1'>
-      <ion-fab-button (click)='mostrarInfoPokemon()' color='light'>
-        <ion-icon name='md-paw' role='img' color="dark"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+        </div>
+      </div>
+    
+      <ion-fab vertical='bottom' horizontal='end' id='fab1'>
+        <ion-fab-button (click)='mostrarInfoPokemon()' color='light'>
+          <ion-icon name='md-paw' role='img' color="dark"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+  
+      <ion-fab vertical='bottom' horizontal='start' id='fab2'>
+        <ion-fab-button (click)='capturar(pokemon.numero_nacional, pokemon.numero_evolucion)' color='dark'>
+          <img src='../../../assets/icon/iconBall.png' alt='ball'>
+        </ion-fab-button>
+      </ion-fab>
 
-    <ion-fab vertical='bottom' horizontal='start' id='fab2'>
-      <ion-fab-button (click)='capturar(pokemon.numero_nacional, pokemon.numeroEvolucion)' color='dark'>
-        <img src='../../../assets/icon/iconBall.png' alt='ball'>
-      </ion-fab-button>
-    </ion-fab>
+    </header>
 
   </div>
-</div>
+</ion-content>

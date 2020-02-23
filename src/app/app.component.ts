@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { DatabaseService } from './servicios/database.service';
+import { AuthService } from './servicios/auth.service';
+import { RepositorioService } from './servicios/repositorio.service';
+import { FirebaseService } from './servicios/firebase.service';
+import { AlertsService } from './servicios/alerts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,30 +15,48 @@ import { DatabaseService } from './servicios/database.service';
   styleUrls: ['app.component.scss']
 })
 
-export class AppComponent {  
-  // rootPage: any = null;
-  // public appPages = [
-  //   { title: 'KANTO', url: '/tabs/tab1' },
-  //   { title: 'JOHTO', url: '/home' },
-  //   { title: 'TODOS', url: '/home' },
-  //   { title: 'captura-prueba', url: '/captura-prueba' },
-  // ];
+export class AppComponent {
+  private id_menu: string = 'home';
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private router: Router,
+    private authService: AuthService,
+    private menu: MenuController,
+    public repo: RepositorioService,
+    public fire: FirebaseService,
+    private alertaServicio: AlertsService
   ) {
     this.initializeApp();
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      setTimeout(() => {
+  private initializeApp() {
+    this.platform.ready().then(async () => {
+      setTimeout(async () => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
-      }, 10000);
+        this.cargarMenuHome();
+      }, 4000);
     });
+  }
+
+  private cargarMenuHome() {
+    this.menu.enable(true, this.id_menu);
+    this.menu.swipeGesture(true, this.id_menu);
+  }
+
+  public async cerrarSesion() {
+    await this.authService.logout();
+  }
+
+  public async borrarCuenta() {
+    await this.authService.borrarSesion();
+  }
+
+  public isAutenticated() {
+    return this.authService.isAuthenticated();
   }
 
 }

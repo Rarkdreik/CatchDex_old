@@ -25,70 +25,419 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-* {
-    // --background: var(--ion-toolbar-background,var(--ion-background-color,#fff));
-    --background: unset;
-}
-
-ion-toolbar {
-    background-color: #1b1f22;
-}
-// ########################################################
-// ############ Diseño CSS Elegante #######################
-// ########################################################
-
-.content {
-    height: 100%;
-    justify-content: center;
-    display: flex;
-}
-
-.wrapper {
-    background-color: #1b1f22;
-}
-
-ion-select {
-    height: 41px;
-}
-
-input {
+.proximamente {
+    display: grid;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    border-radius: 20px;
+    border: 1px solid gold;
     text-align: center;
+    margin-top: auto !important;
+    font-family: Verdana !important;
+    font-weight: bold !important;
+    font-size: 30px !important;
+    width: 90%;
+    color: white;
 }
-
-.select-text {
-    text-transform: capitalize;
-}
-
-.marginauto {
-    margin: auto;
-}
-
-.icon {
-    width: 50px;
-    position: relative;
-    bottom: 2px;
-}
-
-.borde {
-    border: 1px solid white !important;
-    border-radius: 5px;
-}
-
-
-
 
 // ########################################################
 // ############ Diseño General ############################
 // ########################################################
 
 * {
+    --background: unset;
+}
+
+body {
+    display: flex !important;
+}
+
+.wrapper {
+    background-color: #1b1f22;
+}
+
+#header {
+    margin: auto !important;
+    width: inherit;
+}
+
+// ########################################################
+// ########## Barra de Navegacion // Toolbar ##############
+// ########################################################
+
+ion-toolbar {
+    background-color: #1b1f22;
+}
+
+ion-toolbar>* {
+    color: gold;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    font-family: verdana;
+}
+
+ion-buttons>* {
+    box-shadow: none !important;
+    border: 1px solid gold !important;
+    border-radius: 100px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 20px !important;
+    height: 45px !important;
+    min-width: 0px !important;
+    min-height: 0px !important;
+    font-weight: bold !important;
+    width: 45px !important;
+}
+
+// ########################################################
+// ########## Barra de Ventanas // Tap Bar ##############
+// ########################################################
+
+ion-tab-button>* {
+    color: gold !important;
+}
+
+ion-tabs {
+    background-color: #1b1f22 !important;
+}
+
+ion-tab-bar {
+    background-color: #1b1f22 !important;
+    border: 1px solid gold;
+    border-radius: 10px;
+    margin: 1px;
+}
+
+// ########################################################
+// ########## Menu Lateral // sidebar menu ################
+// ########################################################
+
+ion-menu>*>*>ion-item {
+    color: white !important;
+}
+
+// ########################################################
+// ##########  Formularios Reactivos iniciales ############
+// ########################################################
+
+input {
+    color: gold !important;
+    text-align: center;
+}
+
+ion-select {
+    border-radius: 5px !important;
+    border: 1px solid white;
+    color: gold !important;
+}
+
+.alert-wrapper {
+    width: 100% !important;
+}
+
+.alert-button {
+    width: 45% !important;
+    color: black !important;
+}
+
+// body {
+//     display: grid !important;
+//     margin: 0px !important;
+//     padding: 0px !important;
+//     width: 100vw !important;
+// }
+
+// #wrapper {
+//     justify-content: center;
+//     vertical-align: middle;
+// }
+
+// .wrapper {
+//     background-color: #1b1f22;
+// }
+
+// ion-app {
+//     width: 100vw !important;
+// }
+
+// app-root {
+//     display: contents;
+// }
+
+// .contenido {
+//     position: absolute;
+//     top: 0;
+// }
+
+// ############ Boton volver atrás #######################
+// ########################################################
+
+// #swal2-content {
+//     color: gray;
+// }
+
+// .borderStyle1 {
+//     border: solid 1px gray;
+//     border-radius: 5px;
+// }
+
+// ########################################################
+// ############ Diseño CSS Elegante #######################
+// ########################################################
+
+.flex {
+    display: flex !important;
+    margin-bottom: 5px;
+}
+
+// Pantalla battalla pegada arriba
+.contenido {
+    position: absolute;
+}
+
+.prueba {
+    margin-bottom: 5px !important;
+}
+
+.color1 {
+    background-color: #1e8cdfb0 !important;
+}
+
+.toast-wrapper, .toast-content, .toast-container {
+    background-color: #1b1f22 !important;
+    border-radius: 10px !important;
+    border: 1px solid gold !important;
+    color: gold !important;
+    --background-color: unset !important;
+    --color: unset !important;
+}
+
+// .content {
+//     height: 100%;
+//     justify-content: center;
+//     display: flex;
+// }
+
+// ion-loading>* {
+//     background-color: #1b1f22 !important;
+//     border: 1px solid gold !important;
+//     border-radius: 10px !important;
+//     color: red !important;
+// }
+
+// input {
+//     text-align: center;
+// }
+
+// .select-text {
+//     text-transform: capitalize;
+// }
+
+// .marginauto {
+//     margin: auto;
+// }
+
+// .icon {
+//     width: 50px;
+//     position: relative;
+//     bottom: 2px;
+// }
+
+// .borde {
+//     border: 1px solid white !important;
+//     border-radius: 5px;
+// }
+
+// .center {
+//     text-align: center;
+//     justify-content: center;
+// }
+
+// .letra8 * {
+//     font-size: 8px;
+// }
+
+// .letra14 * {
+//     font-size: 14px;
+//     margin: 2px 0px !important;
+// }
+
+// .zonaIconos {
+//     background: #000000;
+//     height: 34px;
+// }
+
+// .zonaIconoBall {
+//     border-radius: 10px 0px 0px 0px;
+//     padding: 2px 0px 0px 6px !important;
+// }
+
+// .zonaIconoFav {
+//     border-radius: 0px 10px 0px 0px;
+//     padding: 2px 6px 0px 0px !important;
+// }
+
+// .width100 {
+//     width: 100%;
+// }
+
+// .height100 {
+//     height: 100%;
+// }
+
+// .flex {
+//     display: flex;
+// }
+
+// .ball {
+//     background-repeat: no-repeat !important;
+//     background-position: center !important;
+//     background-size: contain !important;
+// }
+
+
+// .color1 {
+//     background-color: rgba(18, 18, 50, 0.6);
+// }
+
+// .color2 {
+//     background-color: rgb(19, 39, 82);
+// }
+
+// .row {
+//     margin-right: unset !important;
+//     margin-left: unset !important;
+// }
+
+// .nopadin {
+//     padding: unset;
+// }
+
+// .espacio {
+//     white-space: pre;
+// }
+
+// .inline-flex {
+//     display: inline-flex;
+// }
+
+// .width90 {
+//     width: 90%;
+// }
+
+// .borde10 {
+//     border-radius: 10px;
+// }
+
+// .padin10 {
+//     padding: 10px;
+// }
+
+// .margenfondo10 {
+//     margin-bottom: 10px;
+// }
+
+// .margenfondo_10 {
+//     margin-bottom: -10px;
+// }
+
+// .margen5 {
+//     margin: 5px;
+// }
+
+
+// .pokemon {
+//     height: 150px !important;
+// }
+
+// ########################################################
+// ######## Lector QR con ocultar app #####################
+// ########################################################
+#cordova-plugin-qrscanner-video-preview {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid gold !important;
+    border-radius: 10px !important;
+    min-height: 80% !important;
+    height: 70% !important;
+    top: 45% !important;
+    position: absolute !important;
+    width: 95% !important;
+    min-width: 90% !important;
+    z-index: 800 !important;
+}
+
+#cordova-plugin-qrscanner-still {
+    background-color: black !important;
+    visibility: visible !important;
+}
+
+.cerrarQrScanner {
+    position: absolute !important;
+    bottom: 20px !important;
+    background-color: #1b1f22 !important;
+    border: 1px solid gold !important;
+    border-radius: 10px !important;
+    width: 90%;
+    margin: 0 5% !important;
+}
+
+app-root.has-camera,
+app-root.has-camera ion-content {
+    display: none;
+    --background: transparent;
+    background: transparent !important;
+}
+
+.generadoQr, .generadoQr > * {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 10px;
+}
+
+// ########################################################
+// ############ Diseño Input Camara #######################
+// ########################################################
+.cordova-camera-select {
+    background-color: #1b1f22 !important;
+    border: 1px solid gold;
+    border-radius: 20px;
+    padding: 20px;
+    margin: auto !important;
+    z-index: 100 !important;
+    overflow: visible;
+}
+
+.cordova-camera-capture {
+    background-color: #1b1f22 !important;
+    border: 3px solid gold;
+    border-radius: 20px;
+    padding: 20px;
+    margin: auto !important;
+    z-index: 100 !important;
+    overflow: visible;
     color: white;
 }
 
-#wrapper {
-    justify-content: center;
-    vertical-align: middle;
+.cordova-camera-capture>button {
+    border-radius: 25px;
+    margin-top: 10px;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
 }
+
+// Texto para elegir
+.action-sheet-container>*>*>* {
+    color:
+        #757575 !important;
+}
+
+// ########################################################
+// ############ Diseño Pokemon y Pokeball #################
+// ########################################################
 
 .capturadoPokeBall {
     background: round;
@@ -256,173 +605,4 @@ input {
     background: linear-gradient(to bottom, #92adbf 0%, #1d7f9a 100%);
     background: -moz-linear-gradient(top, #92adbf 0%, #1d7f9a 100%);
     background: -webkit-linear-gradient(top, #92adbf 0%, #1d7f9a 100%);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// * {
-//     font-family: Verdana;
-//     font-weight: bold;
-//     // margin: 0px !important;
-//     // padding: 0px !important;
-//     // color: white;
-// }
-
-// .cardPokemon {
-//     // width: 93% !important;
-//     margin: 3% !important;
-//     // width: 30%;
-//     display: inline-block;
-//     margin: 5px !important;
-//     vertical-align: top;
-// }
-
-// .tarjeta {
-//     margin-bottom: 2% !important;
-//     padding: 3% !important;
-//     background-color: rgba(18, 18, 50, 0.6);
-//     border-radius: 10px;
-// }
-
-.center {
-    text-align: center;
-    justify-content: center;
-}
-
-
-.backbutton {
-    position: fixed;
-}
-
-.menubutton {
-    display: grid;
-    justify-content: end !important;
-    width: 100%;
-}
-
-.letra8 * {
-    font-size: 8px;
-}
-
-.letra14 * {
-    font-size: 14px;
-    margin: 2px 0px !important;
-}
-
-.zonaIconos {
-    background: #000000;
-    height: 34px;
-    // margin: auto !important;
-    // display: flex;
-}
-
-.zonaIconoBall {
-    border-radius: 10px 0px 0px 0px;
-    padding: 2px 0px 0px 6px !important;
-}
-
-.zonaIconoFav {
-    border-radius: 0px 10px 0px 0px;
-    padding: 2px 6px 0px 0px !important;
-}
-
-.width100 {
-    width: 100%;
-}
-
-.height100 {
-    height: 100%;
-}
-
-.flex {
-    display: flex;
-}
-
-.ball{
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: contain !important;
-}
-
-
-.color1 {
-    background-color: rgba(18, 18, 50, 0.6);
-}
-
-.color2 {
-  background-color: rgb(19, 39, 82);
-}
-
-.row {
-  margin-right: unset !important;
-  margin-left: unset !important;
-}
-
-.nopadin {
-  padding: unset;
-}
-
-.espacio {
-  white-space: pre;
-}
-
-.inline-flex {
-    display: inline-flex;
-}
-
-.width90 {
-    width: 90%;
-}
-
-.borde10 {
-  border-radius: 10px;
-}
-
-.padin10 {
-  padding: 10px;
-}
-
-.margenfondo10 {
-  margin-bottom: 10px;
-}
-
-.margenfondo_10 {
-  margin-bottom: -10px;
-}
-
-.margen5 {
-    margin: 5px;
-}
-
-
-.pokemon {
-    height: 150px !important;
-}
-
-.alert-button {
-    width: 45% !important;
-}
-
-span {
-    color: black !important;
-}
-
-ion-select {
-    height: auto !important;
 }

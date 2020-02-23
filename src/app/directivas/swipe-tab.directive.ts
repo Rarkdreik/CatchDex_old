@@ -1,12 +1,4 @@
-import {
-    Directive,
-    ElementRef,
-    Output,
-    EventEmitter,
-    OnInit,
-    Renderer2,
-    OnDestroy
-} from '@angular/core';
+import { Directive, ElementRef, Output, EventEmitter, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import 'hammerjs';
 
 @Directive({
@@ -22,13 +14,13 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
     private swipeDuration: number;
     private browserSwipeGesture: HammerManager;
     private touchListenersFns = [];
-    tabNames: String[] = [];
+    public tabNames: String[] = [];
 
     constructor(
         public _el: ElementRef,
         private _renderer: Renderer2
     ) {
-        console.log('[SwipeTabDirective] constructor');
+        // console.log('[SwipeTabDirective] constructor');
     }
 
     ngOnInit() {
@@ -38,11 +30,11 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
             this.tabNames.push(tabsList[i].tab);
         }
         this.tabCount = this.tabNames.length - 1;
-        console.log('[SwipeTabDirective] ngOnInit, tabNames: ', this.tabNames);
+        // console.log('[SwipeTabDirective] ngOnInit, tabNames: ', this.tabNames);
     }
 
     onTabInitialized(tabName: string): void {
-        console.log('[SwipeTabDirective] onTabInitialized, tabName: ', tabName);
+        // console.log('[SwipeTabDirective] onTabInitialized, tabName: ', tabName);
 
         this.currentTabIndex = this.tabNames.indexOf(tabName);
 
@@ -55,7 +47,7 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
             const content = elem.getElementsByTagName('ion-content')[0];
 
             if (content.querySelector('.swipe-area') === null) {
-                console.log('[SwipeTabDirective] adding swipe area');
+                // console.log('[SwipeTabDirective] adding swipe area');
                 this.createWrapperDiv(content);
             }
         }
@@ -94,7 +86,7 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
     }
 
     deviceSwipeHandler(event: TouchEvent, status: string): void {
-        console.log('[SwipeTabDirective] deviceSwipeHandler, status: ', status);
+        // console.log('[SwipeTabDirective] deviceSwipeHandler, status: ', status);
         const coords: [number, number] = [event.changedTouches[0].pageX, event.changedTouches[0].pageY];
         const time = new Date().getTime();
 
@@ -117,7 +109,7 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
     }
 
     browserSwipeHandler(event) {
-        console.log('[SwipeTabDirective] browserSwipeHandler, direction: ', event.direction);
+        // console.log('[SwipeTabDirective] browserSwipeHandler, direction: ', event.direction);
         switch (event.direction) {
             case 2:
                 this.moveForward();
@@ -133,7 +125,7 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
     }
 
     moveForward(): void {
-        console.log('[SwipeTabDirective] moveForward');
+       // console.log('[SwipeTabDirective] moveForward');
         if (this.currentTabIndex < this.tabCount) {
             this.currentTabIndex++;
             this.tabChange.emit(this.tabNames[this.currentTabIndex]);
@@ -141,7 +133,7 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
     }
 
     moveBackward(): void {
-        console.log('[SwipeTabDirective] moveBackward');
+       // console.log('[SwipeTabDirective] moveBackward');
         if (this.currentTabIndex > 0) {
             this.currentTabIndex--;
             this.tabChange.emit(this.tabNames[this.currentTabIndex]);
