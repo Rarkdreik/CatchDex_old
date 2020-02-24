@@ -79,6 +79,12 @@ export class RepositorioService {
     this.equipoPokemon = equipoPokemon;
   }
 
+  public updatePokemonBatalla(pokebatalla: PokemonInterface): void {
+    this.equipoPokemon.forEach((poke: PokemonInterface) => {
+      if (poke.numero_nacional === pokebatalla.numero_nacional) { poke = pokebatalla; }
+    })
+  }
+
   //////////////////////////////////////////////////////////
   //////////////////  Otros Datos  /////////////////////////
 

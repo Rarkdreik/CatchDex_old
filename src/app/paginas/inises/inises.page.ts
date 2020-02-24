@@ -63,8 +63,8 @@ export class InisesPage implements OnInit {
         await this.authService.saveSession(resolve).then(async (ok) => {
           await this.alertaServicio.alertaSimple("Sesión Iniciada", "La sesión ha sido iniciada.", "success").then((ok) => {
             this.router.navigateByUrl("/iniregion");
-          }).catch((error) => { this.alertaServicio.alertas(error); });
-        }).catch((erroneo) => { this.alertaServicio.alertas(erroneo); });
+          }).catch((error) => { this.alertaServicio.alertas(error + '2'); });
+        }).catch((erroneo) => { this.alertaServicio.alertas(erroneo + '1'); });
       } else { this.alertaServicio.alertaSimple("Inicio sesión fallido", 'No se ha podido iniciar esta cuenta, pruebe a registrarse.' + resolve + '' , "warning"); }
     }).catch((erroneo) => { this.alertaServicio.alertaSimple("Error al iniciar sesion", 'No se han encontrado datos, pruebe a registrarse o contacte a un administrador. ' + erroneo + '. codigo de error: 582456' , "error"); });
   }

@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './servicios/auth.service';
 import { RepositorioService } from './servicios/repositorio.service';
 import { FirebaseService } from './servicios/firebase.service';
-import { AlertsService } from './servicios/alerts.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,7 +26,6 @@ export class AppComponent {
     private menu: MenuController,
     public repo: RepositorioService,
     public fire: FirebaseService,
-    private alertaServicio: AlertsService
   ) {
     this.initializeApp();
   }
@@ -47,7 +45,12 @@ export class AppComponent {
     this.menu.swipeGesture(true, this.id_menu);
   }
 
+  public cerrarMenuHome() {
+    this.menu.close();
+  }
+
   public async cerrarSesion() {
+    this.router.navigateByUrl('/home')
     await this.authService.logout();
   }
 

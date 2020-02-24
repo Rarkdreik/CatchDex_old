@@ -43,16 +43,13 @@ export class IniregionPage implements OnInit {
     });
 
     try {
-      this.loading.presentInfiniteLoading('Cargando información de la cuenta, por favor espere...');
+      await this.loading.presentInfiniteLoading('Cargando información de la cuenta, por favor espere...');
       // Obtiene el correo de haber iniciado sesion
       let correo = this.repo.getCorreo();
-      console.log(correo);
       // Inicializamos nuestro firebase con el correo
       this.firebase.inicializar(correo);
       // Obtenemos el entrenador pokemon
       this.master = (await this.firebase.getEntrenador());
-      console.log(this.master );
-      console.log(this.master.nick + ' ' + this.master.nivel);
       // Si no está vacio procedemos a cargar todos los datos del entrenador
       if (this.master.nick != null && this.master.nick != '') {
         // Su nombre
@@ -64,7 +61,6 @@ export class IniregionPage implements OnInit {
         // Lo indicamos añadiendole el tipo de ball con el que fue capturado
         this.firebase.getPokemonAtrapado().then((resultado) => {
           pokes = resultado as PokemonInterface[];
-          console.log(pokes);
           this.repo.getPokemonsRegionActual().forEach(element => {
             pokes.forEach(pok => {
               if (element.numero_nacional === pok.numero_nacional) { element.ball = pok.ball; }
@@ -76,8 +72,9 @@ export class IniregionPage implements OnInit {
         }).catch(() => {
           this.loading.dismissLoading();
           return null;
-        });
+        }).finally(() => { this.loading.dismissLoading(); });
       } else {
+        this.loading.dismissLoading();
         this.alertaServicio.alertaSimple('No hay datos', 'Porfavor registrese o contacte con el soporte tecnico', 'warning');
       }
     } catch (erroneo) {
@@ -102,9 +99,11 @@ export class IniregionPage implements OnInit {
   public onSubmit() {
     let master: Entrenador = { nick: 'Ash', nivel: 1, exp: 0, pokeBalls: 10, superBalls: 0, ultraBalls: 0, masterBalls: 0 };
     this.masterData = this.saveMaster();
+    let correo = this.repo.getCorreo();
+    this.firebase.inicializar(correo);
     master = this.inicializarMaestroPokemon(master);
-    this.addToFirebase(master);
     this.inicializarRepositorio(master);
+    this.addToFirebase(master);
     this.repo.setAvatar('../../../assets/images/avatar/avatar.png');
     this.router.navigateByUrl('/main/avatar');
   }
@@ -149,6 +148,7 @@ export class IniregionPage implements OnInit {
    * @param master Objeto Entrenador para completar los datos restantes.
    */
   private inicializarRepositorio(master: Entrenador) {
+    master.capturados = []
     this.repo.setRegion(master.region_ini);
     this.repo.modificarEquipoPokemon(master.poke_ini, 0);
     this.repo.getListaPokemonRegion(master.region_ini);

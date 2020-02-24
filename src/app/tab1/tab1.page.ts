@@ -75,6 +75,7 @@ export class Tab1Page {
           this.pokeSalvaje.hp = 0;
           let pokevo = this.pokemonBatalla;
           this.pokemonBatalla = this.lvup.obtenerExpPokemon(this.pokemonBatalla, this.pokeSalvaje);
+          this.repo.updatePokemonBatalla(this.pokemonBatalla);
           this.repo.setMaster(this.lvup.obtenerExpEntrenador(this.repo.getMaster(), this.pokeSalvaje));
           this.fire.addMaster(this.repo.getMaster());
           // Actualizar el pokemon evolucionado al array del repositorio.

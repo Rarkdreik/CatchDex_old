@@ -13,7 +13,7 @@ export class Tab3Page {
   pokemonsAtrapado: PokemonInterface[] = [];
   pokemonsEquipo: PokemonInterface[] = [];
 
-  constructor(public route: Router, private repo: RepositorioService) {
+  constructor(public route: Router, public repo: RepositorioService) {
     // this.pokemons.push(this.pokemon);
    }
   

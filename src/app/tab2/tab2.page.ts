@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PokemonInterface } from '../modelo/Pokemons';
 import { DatabaseService } from '../servicios/database.service';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { AlertsService } from '../servicios/alerts.service';
 import { RepositorioService } from '../servicios/repositorio.service';
 import { LoadingService } from '../servicios/loading.service';
 
@@ -19,10 +17,8 @@ export class Tab2Page {
 
   constructor(
     private db: DatabaseService,
-    private nativeStorage: NativeStorage,
     private route: Router,
-    private repo: RepositorioService,
-    private alertas: AlertsService,
+    public repo: RepositorioService,
     private loadService: LoadingService,
   ) {
     this.pokemons = [];
@@ -31,26 +27,8 @@ export class Tab2Page {
 
   ngOnInit() {
     this.loadService.presentLoading('Actualizando Pokedex');
-    // this.region = this.repo.getRegion();
-    // this.pokemons = this.repo.getListaPokemonRegion(this.region);
     this.pokemons = this.repo.getPokemonsRegionActual();
     this.loadService.dismissLoading();
-
-    // try {
-    //   this.nativeStorage.getItem('datos').then(data => {
-    //     region = data.region;
-
-    //     this.db.getDatabaseState().subscribe(rdy => {
-    //       if (rdy) {
-    //         this.db.getPokemons(region).subscribe(pokemons => {
-    //           this.pokemons = pokemons;
-    //         })
-    //       }
-    //     });
-    //   });
-    // } catch (erroneo) {
-    //   this.alertas.alertas(erroneo);
-    // }
   }
 
   doRefresh(event) {
@@ -99,10 +77,6 @@ export class Tab2Page {
         alert('Necesitas llegar al nivel 15 para capturar a este pokemon');
       }
     }
-  }
-
-  setFavorito(pokemon: PokemonInterface) {
-    // pokemon.favorito = !pokemon.favorito;
   }
 
   irDescripcion(numero_nacional: string) {

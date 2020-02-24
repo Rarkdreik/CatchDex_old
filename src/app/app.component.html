@@ -7,8 +7,12 @@
     </ion-header>
     <ion-content>
       <ion-list >
+        <ion-item (click)="cerrarMenuHome()">Cerrar Menu</ion-item>
+        <ion-item ></ion-item>
         <ion-item *ngIf="isAutenticated()" (click)="cerrarSesion()">Cerrar Sesión</ion-item>
+        <ion-item ></ion-item>
         <ion-item *ngIf="isAutenticated()" (click)="borrarCuenta()">Borrar Cuenta</ion-item>
+        <ion-item ></ion-item>
       </ion-list >
     </ion-content>
   </ion-menu>

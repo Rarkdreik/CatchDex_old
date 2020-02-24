@@ -26,7 +26,7 @@
     "@ionic-native/file": "^5.20.0",
     "@ionic-native/google-plus": "^5.19.1",
     "@ionic-native/native-audio": "^5.19.1",
-    "@ionic-native/native-storage": "^5.19.1",
+    "@ionic-native/native-storage": "^5.21.6",
     "@ionic-native/qr-scanner": "^5.21.5",
     "@ionic-native/splash-screen": "^5.19.1",
     "@ionic-native/sqlite": "^5.19.1",
@@ -101,12 +101,12 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-nativeaudio": {},
-      "cordova-plugin-nativestorage": {},
       "cordova-sqlite-storage": {},
       "uk.co.workingedge.cordova.plugin.sqliteporter": {},
       "cordova-plugin-googleplus": {
         "REVERSED_CLIENT_ID": "com.googleusercontent.apps.446704972713-0sh2uu17q24ikhrkgu2end9egsh93dq9",
-        "WEB_APPLICATION_CLIENT_ID": "446704972713-s73s5csaakd726t2oqnds4ot8un57gab.apps.googleusercontent.com"
+        "WEB_APPLICATION_CLIENT_ID": "446704972713-s73s5csaakd726t2oqnds4ot8un57gab.apps.googleusercontent.com",
+        "PLAY_SERVICES_VERSION": "15.0.1"
       },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-camera": {
@@ -114,9 +114,11 @@
       },
       "cordova-plugin-file": {},
       "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+        "ANDROID_SUPPORT_V4_VERSION": "27.+",
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
-      "cordova-plugin-qrscanner": {}
+      "cordova-plugin-qrscanner": {},
+      "cordova-plugin-nativestorage": {}
     },
     "platforms": [
       "android",

@@ -85,6 +85,7 @@ export class CapturaPage implements OnInit {
           this.pokeSalvaje.hp = 0;
           let pokevo = this.pokemonBatalla;
           this.pokemonBatalla = this.lvup.obtenerExpPokemon(this.pokemonBatalla, this.pokeSalvaje);
+          this.repo.updatePokemonBatalla(this.pokemonBatalla);
           this.barraExp = this.lvup.calcularBarraExp(this.barraExp, this.pokemonBatalla);
           this.repo.setMaster(this.lvup.obtenerExpEntrenador(this.repo.getMaster(), this.pokeSalvaje));
           this.fire.addMaster(this.repo.getMaster());
@@ -376,8 +377,11 @@ export class CapturaPage implements OnInit {
       this.db.addPokemon(this.pokeSalvaje);
       this.db.addPokemonAtrapado(this.pokeSalvaje);
     } catch (e) {
-      this.fire.addPokemon(this.pokeSalvaje);
-      this.toast.presentarToast('No se ha podido añadir el pokemon a la base de datos', 'danger', 3000)
+      this.fire.addPokemon(this.pokeSalvaje).then(() => {
+        this.toast.presentarToast('Se ha añadido el pokemon a la base de datos', 'success', 3000);
+      }).catch(() => {
+        this.toast.presentarToast('No se ha podido añadir el pokemon a la base de datos', 'danger ', 3000);
+      });
     }
     this.repo.updatePokeRegionActual(this.pokeSalvaje);
   }

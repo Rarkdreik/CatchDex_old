@@ -31,13 +31,10 @@ export class LvupService {
   public obtenerExpPokemon(pokeExp: PokemonInterface, pokeRival: PokemonInterface, barraExp?: any): PokemonInterface {
     let nivel: number = 0; let genero: string = ''; let exp: number = 0; let contExp: number = 0;
     this.contenedorExpPokemon = (pokeExp.nivel + 1) * (pokeExp.nivel + 1) * (pokeExp.nivel + 1);
-
     // 1 seria 1.5 si fuera de un entrenador
     pokeExp.exp = this.convertirEntero((pokeExp.exp + (250 * pokeRival.nivel) / 7));
 
-    // this.calcularBarraExp();
-
-    while (pokeExp.exp >= this.contenedorExpPokemon) {
+    do {
       pokeExp.nivel += 1;
       pokeExp.exp -= this.contenedorExpPokemon;
       if (barraExp != undefined) {
@@ -51,7 +48,8 @@ export class LvupService {
           pokeExp.nivel = nivel; pokeExp.genero = genero; pokeExp.exp = exp;
         }
       }
-    }
+    } while (pokeExp.exp >= this.contenedorExpPokemon);
+    pokeExp = this.calcularStats(pokeExp);
     return pokeExp;
   }
 

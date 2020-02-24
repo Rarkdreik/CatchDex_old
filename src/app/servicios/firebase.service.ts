@@ -70,8 +70,6 @@ export class FirebaseService {
       data.displayName = '';
       data.photoURL = '../../assets/images/avatar/avatar.png';
     }
-    console.log(data);
-    // userRef.set(data, { merge: true });
     userRef.set(data);
     this.repo.setUsuario(data);
     return this.repo.getUsuario();
@@ -94,10 +92,7 @@ export class FirebaseService {
       data.photoURL = '../../assets/images/avatar/avatar.png';
     }
     // userRef.set(data, { merge: true });
-    userRef.update(data).then((resultado) => {
-    }).catch((erroneo) => {
-      userRef.set(data, { merge: true });
-    })
+    userRef.update(data).then((resultado) => { }).catch((erroneo) => { userRef.set(data, { merge: true }); })
     this.repo.setUsuario(data);
     return this.repo.getUsuario();
   }
@@ -123,11 +118,7 @@ export class FirebaseService {
    * @param tiempo 
    */
   public async crearQr(codigoQr: CodigoQrInterface) {
-    this.leerQr(codigoQr).then((resultado) => {
-      console.log(resultado);
-    }).catch((erroneo) => {
-      console.log(erroneo);
-    });
+    // this.leerQr(codigoQr).then((resultado) => {}).catch((erroneo) => {});
     const qrRef = this.af.collection(environment.id_app).doc('codigos').collection('qr').doc<CodigoQrInterface>(codigoQr.correo);
     const data: CodigoQrInterface = {
       codigo: codigoQr.codigo,
@@ -235,7 +226,7 @@ export class FirebaseService {
   }
 
   public async updateMaster(master: Entrenador) {
-    await this.masterCollection.doc<Entrenador>('ash').update(master);
+    await this.masterCollection.doc<Entrenador>('ash').set(master, { merge: true });
   }
 
   public async deleteMaster(master: Entrenador) {
@@ -257,7 +248,7 @@ export class FirebaseService {
   /////////////////////////////////////////////////////////////
 
   public addPokemon(pokemon: PokemonInterface) {
-    this.pokeCollection.doc<PokemonInterface>(pokemon.numero_nacional).set(pokemon);
+    return this.pokeCollection.doc<PokemonInterface>(pokemon.numero_nacional).set(pokemon);
   }
 
   public async getPokemonAtrapado() {

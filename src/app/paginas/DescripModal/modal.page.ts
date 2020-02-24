@@ -28,7 +28,7 @@ export class ModalPage implements OnInit {
     private stats: StatsService,
     private route: ActivatedRoute,
     private db: DatabaseService,
-    private repo: RepositorioService
+    public repo: RepositorioService
   ) {
     this.numero_nacional = this.route.snapshot.paramMap.get('id');
     this.pokemon = this.stats.getStatsPokemon(this.numero_nacional);

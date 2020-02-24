@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RepositorioService } from '../../servicios/repositorio.service';
+import { FirebaseService } from '../../servicios/firebase.service';
 
 @Component({
   selector: 'app-centropokemon',
@@ -7,8 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CentropokemonPage implements OnInit {
 
-  constructor() { }
+  constructor(private repo: RepositorioService, private fire: FirebaseService) { }
 
   ngOnInit() {}
+
+  public curar() {
+    this.repo.getEquipoPokemon().forEach((elemento) => {
+      elemento.hp = elemento.hp_max;
+    });
+  }
 
 }
